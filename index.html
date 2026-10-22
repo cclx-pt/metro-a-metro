@@ -13,13 +13,31 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800;900&family=Barlow:wght@400;500;700&family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">
 <link rel="icon" type="image/png" href="logo.png">
 <style>
+html{color-scheme:light}
 :root{
-  --paper:#f2efe6; --paper-2:#faf8f2; --ink:#1b1b1b; --ink-2:#3d3d3d; --mut:#6b6b66;
+  --paper:#f2efe6; --paper-2:#faf8f2; --ink:#1b1b1b; --ink-2:#3d3d3d; --mut:#6b6b66; --solid:#1b1b1b; --white:#fff; --rule:var(--rule); --dk:#1b1b1b; --sqn:#16396aa0;
   --yel:#f6c400; --grn:#2f9e44; --m1:#dce7f5; --m2:#b3c9e9; --m3:#86a7d6; --yel-d:#d9ab00; --blue:#1d4f91; --blue-l:#d9e2ea; --line:#1d4f9155; --org:#e8590c;
   --cond:"Barlow Condensed","Arial Narrow",sans-serif;
   --sans:"Barlow","Segoe UI",system-ui,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
 }
+
+:root[data-theme="dark"]{color-scheme:dark;
+  --paper:#12161a; --paper-2:#1a2026; --ink:#ece8de; --ink-2:#c9c5bb; --mut:#9b988f;
+  --blue:#7ea9e8; --blue-l:#1b232b; --line:#7ea9e840; --org:#ff7a33; --grn:#3bb553;
+  --m1:#24364b; --m2:#2d4d74; --m3:#3b67a0; --solid:#0a0c0e; --white:#0e1215; --rule:#ece8de2e; --sqn:#c7d9f3a0}
+:root[data-theme="dark"] .brand img{box-shadow:0 0 0 2px #ece8de;border-radius:50%}
+:root[data-theme="dark"] .photo img,:root[data-theme="dark"] .space img{filter:brightness(.9)}
+/* controls */
+.ctrls{margin-left:auto;display:flex;align-items:center;gap:8px}
+.seg{display:inline-flex;border:2px solid var(--ink)}
+.seg button,.theme{appearance:none;background:var(--paper-2);color:var(--ink);border:0;font:700 12px var(--mono);letter-spacing:.08em;padding:6px 9px;cursor:pointer}
+.seg button+button{border-left:2px solid var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--yel);color:var(--dk)}
+.theme{border:2px solid var(--ink);display:inline-flex;align-items:center;gap:6px}
+.theme svg{width:16px;height:16px;display:block}
+.seg button:focus-visible,.theme:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.chart .gl{stroke:var(--line)} .chart .ax{fill:var(--blue)} .chart .ln{stroke:var(--ink)} .chart .lf{fill:var(--ink)} .chart .gr{fill:var(--grn)}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased;
@@ -28,9 +46,9 @@ body{margin:0;color:var(--ink);font-family:var(--sans);font-size:17px;line-heigh
   background-size:24px 24px}
 a{color:inherit}
 .wrap{max-width:1180px;margin:0 auto;padding:0 32px}
-.tape{height:22px;background:repeating-linear-gradient(-45deg,var(--yel) 0 20px,var(--ink) 20px 40px)}
-.tag{display:inline-block;background:var(--ink);color:var(--yel);font:700 12px var(--mono);letter-spacing:.18em;text-transform:uppercase;padding:5px 9px}
-.tag.y{background:var(--yel);color:var(--ink)}
+.tape{height:22px;background:repeating-linear-gradient(-45deg,var(--yel) 0 20px,var(--dk) 20px 40px)}
+.tag{display:inline-block;background:var(--solid);color:var(--yel);font:700 12px var(--mono);letter-spacing:.18em;text-transform:uppercase;padding:5px 9px}
+.tag.y{background:var(--yel);color:var(--dk)}
 .tag.b{background:var(--blue);color:#fff}
 .mono{font-family:var(--mono)}
 .cond{font-family:var(--cond);font-weight:900;text-transform:uppercase;letter-spacing:-.01em;line-height:.92}
@@ -48,7 +66,8 @@ h3{font:800 24px/1.05 var(--cond);text-transform:uppercase}
 .brand .sep{width:3px;height:30px;background:var(--yel)}
 .brand .bc{font:800 22px/1 var(--cond);text-transform:uppercase;color:var(--blue)}
 .brand .r{margin-left:auto;font:700 12px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
-@media (max-width:560px){.brand img{height:34px}.brand .bn{font-size:24px}.brand .bc{font-size:18px}.brand .r{display:none}}
+.brand{flex-wrap:wrap}
+@media (max-width:560px){.brand img{height:34px}.brand .bn{font-size:24px}.brand .bc{font-size:18px}.ctrls{width:100%;justify-content:flex-end;margin-top:4px}}
 /* header */
 header{padding:0}
 .hero{margin-top:30px}
@@ -66,7 +85,7 @@ a.hcard:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
 .hh .small{font-size:12px;color:var(--blue)}
 .hamt{font:900 44px/1 var(--cond);margin-top:10px}
 .hamt small{font:700 16px var(--cond);color:var(--mut);text-transform:uppercase}
-.hbar{height:14px;border:2px solid var(--ink);background:#fff;margin-top:10px;position:relative}
+.hbar{height:14px;border:2px solid var(--ink);background:var(--white);margin-top:10px;position:relative}
 .hbar span{display:block;height:100%;width:0;background:var(--grn);transition:width 1.2s ease}
 .hbar i{position:absolute;top:0;bottom:0;width:2px;background:var(--ink)}
 .hrow{display:flex;justify-content:space-between;font-size:12px;margin-top:6px;color:var(--ink-2)}
@@ -74,7 +93,7 @@ a.hcard:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
 .give2 .btn{width:100%;justify-content:center}
 .hnote{font-size:14px;margin-top:10px;color:var(--ink-2)}
 .hways{list-style:none;margin:10px 0 0;padding:0;font-size:14px}
-.hways li{padding:6px 0;border-top:1px dashed #1b1b1b40}
+.hways li{padding:6px 0;border-top:1px dashed var(--rule)}
 .hways .mono{font-size:13px;font-weight:700}
 .hways .mut{color:var(--mut);font-size:13px}
 .hproof{margin-top:8px;font-size:13px;border-left:4px solid var(--org);padding:4px 0 4px 10px}
@@ -82,7 +101,7 @@ a.hcard:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
 .hlink{display:block;margin-top:10px;font:700 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--blue)}
 .spec{font:500 13px var(--mono);border:2px solid var(--blue);color:var(--blue);background:var(--paper-2);padding:10px 14px;line-height:1.7}
 .spec b{color:var(--ink)}
-.btn{display:inline-flex;align-items:center;gap:10px;background:var(--yel);color:var(--ink);font:800 20px var(--cond);text-transform:uppercase;letter-spacing:.04em;text-decoration:none;padding:12px 20px;border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--yel);color:var(--dk);font:800 20px var(--cond);text-transform:uppercase;letter-spacing:.04em;text-decoration:none;padding:12px 20px;border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink)}
 .btn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--ink)}
 .btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
 .btn:focus-visible,.tab:focus-visible,.copy:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
@@ -91,7 +110,7 @@ a.hcard:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
 nav.tabs{display:flex;gap:0;margin-top:30px;border-bottom:3px solid var(--ink)}
 .tab{appearance:none;background:transparent;border:2px solid transparent;border-bottom:0;font:800 20px var(--cond);text-transform:uppercase;letter-spacing:.04em;color:var(--mut);padding:10px 20px 8px;cursor:pointer}
 .tab:hover{color:var(--ink)}
-.tab[aria-selected="true"]{background:var(--ink);color:var(--yel)}
+.tab[aria-selected="true"]{background:var(--solid);color:var(--yel)}
 .tab .n{font:700 11px var(--mono);margin-right:8px;opacity:.8}
 .panel[hidden]{display:none}
 
@@ -100,10 +119,10 @@ nav.tabs{display:flex;gap:0;margin-top:30px;border-bottom:3px solid var(--ink)}
 .top{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.15fr);gap:40px;align-items:start}
 .amount{font:900 clamp(64px,8.6vw,108px)/.9 var(--cond);margin-top:14px;font-variant-numeric:tabular-nums}
 .of{font:700 clamp(20px,2.4vw,28px) var(--cond);color:var(--mut);text-transform:uppercase}
-.of b{color:var(--ink);background:var(--yel);padding:0 6px}
+.of b{color:var(--dk);background:var(--yel);padding:0 6px}
 .ruler{margin-top:22px}
 .ruler .r{height:26px;border:2px solid var(--ink);background:var(--paper-2);position:relative;overflow:hidden}
-.ruler .r:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 calc(100%/36 - 1px),#1b1b1b55 calc(100%/36 - 1px) calc(100%/36));pointer-events:none}
+.ruler .r:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 calc(100%/36 - 1px),var(--rule) calc(100%/36 - 1px) calc(100%/36));pointer-events:none}
 .ruler .r span{display:block;height:100%;width:0;background:var(--grn);border-right:2px solid var(--ink);transition:width 1.2s ease}
 .ruler .r i{position:absolute;top:0;bottom:0;width:2px;background:var(--ink)}
 .ticks{position:relative;height:22px;font:500 12px var(--mono);color:var(--ink-2)}
@@ -120,7 +139,7 @@ nav.tabs{display:flex;gap:0;margin-top:30px;border-bottom:3px solid var(--ink)}
 .sq.m1{background:var(--m1)} .sq.m2{background:var(--m2)} .sq.m3{background:var(--m3)}
 .sq.edge{box-shadow:inset 3px 0 0 var(--ink)}
 .sq>i{position:absolute;inset:0 auto 0 0;width:0;background:var(--grn);transition:width .3s ease}
-.sq>b{position:absolute;left:2px;bottom:1px;font:500 8px var(--mono);color:#16396aa0;z-index:1}
+.sq>b{position:absolute;left:2px;bottom:1px;font:500 8px var(--mono);color:var(--sqn);z-index:1}
 .sq.on>b{color:#fff}
 .sq.next{outline:2px dashed var(--org);outline-offset:-2px}
 .plan .ft{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:10px;font:500 12px var(--mono);color:var(--ink-2)}
@@ -140,7 +159,7 @@ section.block{margin-top:60px}
 .ph .top2{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .ph .v{font:900 44px/1 var(--cond);margin-top:12px}
 .ph .s{font:500 13px var(--mono);color:var(--mut)}
-.ph .pb{height:14px;border:2px solid var(--ink);margin-top:14px;background:#fff}
+.ph .pb{height:14px;border:2px solid var(--ink);margin-top:14px;background:var(--white)}
 .ph .pb span{display:block;height:100%;width:0;background:var(--grn);transition:width 1.2s ease}
 .ph .st{font:500 13px var(--mono);margin-top:8px}
 .stamp{font:700 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border:2px solid var(--mut);color:var(--mut);transform:rotate(-3deg);white-space:nowrap}
@@ -150,9 +169,9 @@ section.block{margin-top:60px}
 .chart{padding:14px 14px 6px}
 .chart svg{display:block;width:100%;height:auto}
 .log{padding:0}
-.log .lh{background:var(--ink);color:var(--yel);font:700 12px var(--mono);letter-spacing:.14em;padding:8px 14px;text-transform:uppercase}
+.log .lh{background:var(--solid);color:var(--yel);font:700 12px var(--mono);letter-spacing:.14em;padding:8px 14px;text-transform:uppercase}
 .log table{width:100%;border-collapse:collapse;font:500 14px var(--mono)}
-.log td{padding:9px 14px;border-bottom:1px dashed #1b1b1b40}
+.log td{padding:9px 14px;border-bottom:1px dashed var(--rule)}
 .log tr:last-child td{border-bottom:0}
 .log td:last-child{text-align:right;font-weight:700}
 .updated{margin-top:40px;border-top:3px solid var(--ink);padding-top:14px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font:500 13px var(--mono);color:var(--ink-2)}
@@ -164,7 +183,7 @@ section.block{margin-top:60px}
 .sec p{color:var(--ink-2)}
 .vision{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
 .ref{font:700 14px var(--mono);color:var(--blue);margin-top:4px}
-.callout{background:var(--yel);border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:18px 20px;margin-top:22px;font-size:17px}
+.callout{background:var(--yel);color:var(--dk);border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:18px 20px;margin-top:22px;font-size:17px}
 .photo{border:2px solid var(--ink);background:var(--paper-2);padding:10px 10px 6px}
 .photo img{width:100%;height:auto;display:block;filter:grayscale(.15) contrast(1.05)}
 .photo figcaption,.space figcaption{font:500 12px var(--mono);color:var(--mut);margin-top:6px}
@@ -172,25 +191,25 @@ section.block{margin-top:60px}
 .space figure{margin:0;border:3px solid var(--blue);background:var(--paper-2);padding:10px}
 .space img{width:100%;height:auto;display:block}
 table.areas{width:100%;border-collapse:collapse;border:2px solid var(--ink);background:var(--paper-2);font-size:16px}
-.areas td{padding:12px 14px;border-bottom:1px solid #1b1b1b30}
+.areas td{padding:12px 14px;border-bottom:1px solid var(--rule)}
 .areas td:last-child{text-align:right;font:900 26px var(--cond);white-space:nowrap}
 .areas .sw{display:inline-block;width:14px;height:14px;border:1px solid var(--ink);margin-right:10px;vertical-align:-2px}
-.areas tr.tot td{background:var(--ink);color:var(--yel);font:900 22px var(--cond);text-transform:uppercase;border:0}
+.areas tr.tot td{background:var(--solid);color:var(--yel);font:900 22px var(--cond);text-transform:uppercase;border:0}
 .areas tr.tot td:last-child{font-size:34px}
 .nums{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:2px solid var(--ink);margin-top:26px;background:var(--paper-2)}
 .nums div{padding:22px 18px;border-right:2px solid var(--ink)}
 .nums div:last-child{border-right:0}
 .nums .v{font:900 clamp(36px,4vw,52px)/1 var(--cond)}
 .nums .l{font:500 13px var(--mono);color:var(--mut);margin-top:10px}
-.nums .hl{background:var(--yel)} .nums .hl .l{color:var(--ink)}
+.nums .hl{background:var(--yel);color:var(--dk)} .nums .hl .l{color:var(--dk)}
 .small-note{font:500 13px var(--mono);color:var(--ink-2);margin-top:12px}
 .how{display:grid;grid-template-columns:1fr 1.1fr;gap:32px;margin-top:26px;align-items:start}
 .feat{padding:16px 18px;margin-bottom:14px}
 .feat p{margin:6px 0 0;font-size:16px}
 .stairs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;align-items:end}
 .stairs .col{display:flex;flex-direction:column;gap:6px}
-.stairs .b{height:62px;border:2px dashed var(--blue);background:#fff6}
-.stairs .b.on{border:2px solid var(--ink);background:var(--yel);display:flex;flex-direction:column;align-items:center;justify-content:center}
+.stairs .b{height:62px;border:2px dashed var(--blue);background:var(--paper-2)}
+.stairs .b.on{color:var(--dk);border:2px solid var(--ink);background:var(--yel);display:flex;flex-direction:column;align-items:center;justify-content:center}
 .stairs .b.on .v{font:900 26px/1 var(--cond)}
 .stairs .b.on small{font:500 11px var(--mono)}
 .stairs .lab{font:700 12px var(--mono);text-align:center;letter-spacing:.12em;margin-top:4px}
@@ -201,32 +220,32 @@ table.areas{width:100%;border-collapse:collapse;border:2px solid var(--ink);back
 .tier .m{font:700 13px var(--mono);color:var(--blue)}
 .tier .v{font:900 40px/1 var(--cond);margin-top:6px}
 .tier .d{font-size:14px;color:var(--mut);margin-top:6px}
-.tier.hl{background:var(--ink);color:#fff;box-shadow:6px 6px 0 var(--yel)}
+.tier.hl{background:var(--solid);color:#fff;box-shadow:6px 6px 0 var(--yel)}
 .tier.hl .m{color:var(--yel)} .tier.hl .d{color:#cfcfcf}
 .tips{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
 .tip{border-left:6px solid var(--yel);background:var(--paper-2);padding:12px 16px;font-size:16px;border-top:1px solid var(--ink);border-right:1px solid var(--ink);border-bottom:1px solid var(--ink)}
 .gantt{margin-top:28px;border:2px solid var(--ink);background:var(--paper-2)}
-.gantt .row{display:grid;grid-template-columns:150px 1fr;border-bottom:1px solid #1b1b1b30;min-height:64px}
+.gantt .row{display:grid;grid-template-columns:150px 1fr;border-bottom:1px solid var(--rule);min-height:64px}
 .gantt .row:last-child{border-bottom:0}
-.gantt .when{background:var(--ink);color:var(--yel);font:700 13px var(--mono);letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center;padding:10px 14px}
+.gantt .when{background:var(--solid);color:var(--yel);font:700 13px var(--mono);letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center;padding:10px 14px}
 .gantt .what{display:flex;align-items:center;gap:16px;padding:10px 16px;flex-wrap:wrap}
 .gantt .what h3{min-width:150px}
 .gantt .what p{margin:0;font-size:15px}
-.gantt .row.goal .when{background:var(--yel);color:var(--ink)}
+.gantt .row.goal .when{background:var(--yel);color:var(--dk)}
 .give{display:grid;grid-template-columns:1.1fr 1fr;gap:32px;margin-top:24px;align-items:start}
 .give ol{list-style:none;margin:0;padding:0;counter-reset:s;border:2px solid var(--ink);background:var(--paper-2)}
-.give li{display:flex;gap:16px;align-items:center;padding:14px 16px;border-bottom:1px solid #1b1b1b30;counter-increment:s}
+.give li{display:flex;gap:16px;align-items:center;padding:14px 16px;border-bottom:1px solid var(--rule);counter-increment:s}
 .give li:last-child{border-bottom:0}
 .give li:before{content:"0" counter(s);font:900 30px/1 var(--cond);color:var(--blue);min-width:36px}
 .way{padding:16px 18px;margin-bottom:14px}
 .way .v{font:700 17px var(--mono);margin-top:8px;word-break:break-word}
-.copy{appearance:none;background:var(--yel);border:2px solid var(--ink);font:700 12px var(--mono);text-transform:uppercase;letter-spacing:.08em;padding:6px 10px;margin-top:10px;cursor:pointer}
+.copy{appearance:none;color:var(--dk);background:var(--yel);border:2px solid var(--ink);font:700 12px var(--mono);text-transform:uppercase;letter-spacing:.08em;padding:6px 10px;margin-top:10px;cursor:pointer}
 .way .wn{font-size:14px;color:var(--mut);margin-top:4px}
-.proof{border:2px dashed var(--org);background:#fff8;padding:12px 16px;font-size:15px}
+.proof{border:2px dashed var(--org);background:var(--paper-2);padding:12px 16px;font-size:15px}
 .proof a{font-weight:700}
 .slogan{font:800 24px var(--cond);text-transform:uppercase;margin-top:16px}
-.slogan span{background:var(--yel);padding:0 6px}
-.closing{background:var(--ink);color:#fff;padding:56px 0 64px}
+.slogan span{color:var(--dk);background:var(--yel);padding:0 6px}
+.closing{background:var(--solid);color:#fff;padding:56px 0 64px}
 .closing h2{color:#fff;margin-top:26px;font-size:clamp(44px,7vw,88px)}
 .closing h2 span{color:var(--yel)}
 .closing .ml{font:700 15px var(--mono);color:var(--yel);margin-top:10px}
@@ -234,7 +253,7 @@ table.areas{width:100%;border-collapse:collapse;border:2px solid var(--ink);back
 .closing cite{display:block;font:500 13px var(--mono);font-style:normal;color:var(--yel);margin-top:8px}
 .mini{display:grid;grid-template-columns:repeat(30,1fr);gap:3px;max-width:760px}
 .mini i{aspect-ratio:1;background:var(--yel)}
-footer{background:var(--ink);color:#bdbdbd;font:500 13px var(--mono);padding:0 0 26px}
+footer{background:var(--solid);color:#bdbdbd;font:500 13px var(--mono);padding:0 0 26px}
 footer .wrap{border-top:1px solid #444;padding-top:18px}
 
 @media (max-width:900px){
@@ -263,6 +282,7 @@ footer .wrap{border-top:1px solid #444;padding-top:18px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
+<script>try{var t=localStorage.getItem('mam-theme');if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
 </head>
 <body>
 <div class="tape" aria-hidden="true"></div>
@@ -271,7 +291,12 @@ footer .wrap{border-top:1px solid #444;padding-top:18px}
     <div class="brand">
       <img src="logo.png" alt="CCLX" onerror="this.remove()">
       <span class="bn">CCLX</span><span class="sep" aria-hidden="true"></span><span class="bc">Moita &amp; Barreiro</span>
-      <span class="r">Campanha das obras</span>
+      <div class="ctrls">
+        <div class="seg" role="group" aria-label="Idioma">
+          <button type="button" data-lang="pt" aria-pressed="true" title="Português">PT</button><button type="button" data-lang="en" aria-pressed="false" title="English">EN</button><button type="button" data-lang="es" aria-pressed="false" title="Español">ES</button>
+        </div>
+        <button type="button" class="theme" id="theme" aria-label="Modo noite"><svg id="ticon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      </div>
     </div>
     <div class="hero">
       <div>
@@ -497,9 +522,175 @@ footer .wrap{border-top:1px solid #444;padding-top:18px}
 
 <script>
 (function(){
+  var DATA=null, LANG='pt';
+  var D={
+  'Campanha das obras':['Building campaign','Campaña de las obras'],
+  'Obra em curso':['Work in progress','Obra en curso'],
+  '// cada m² da nossa nova casa':['// every m² of our new home','// cada m² de nuestra nueva casa'],
+  'Duas comunidades, um futuro. Uma campanha para todos ajudarmos a pagar as obras do novo espaço.':['Two communities, one future. A campaign for all of us to help pay for the works on our new space.','Dos comunidades, un futuro. Una campaña para que todos ayudemos a pagar las obras del nuevo espacio.'],
+  'Campanha':['Campaign','Campaña'],
+  'de 36 000 €':['of €36,000','de 36 000 €'],
+  'Ver detalhe da campanha →':['See campaign details →','Ver detalles de la campaña →'],
+  'Áreas':['Areas','Áreas'],
+  'ÁREA ........':['AREA ........','ÁREA ........'],
+  'VALOR/m² ....':['PRICE/m² ....','VALOR/m² ....'],
+  'OBJETIVO ....':['GOAL ........','OBJETIVO ....'],
+  'PRAZO .......':['TIMELINE ....','PLAZO .......'],
+  'NOV 2026 → JAN 2027':['NOV 2026 → JAN 2027','NOV 2026 → ENE 2027'],
+  'Contribuir →':['Give →','Contribuir →'],
+  'Em':['At','En'],
+  '· categoria «Obras Nova Moita&barreiro»':['· category «Obras Nova Moita&barreiro»','· categoría «Obras Nova Moita&barreiro»'],
+  'Transferência:':['Bank transfer:','Transferencia:'],
+  '(pode aparecer «Marcele», a nossa tesoureira, ou «CCLX»)':['(may show as «Marcele», our treasurer, or «CCLX»)','(puede aparecer «Marcele», nuestra tesorera, o «CCLX»)'],
+  'Por transferência ou MB WAY, envia o comprovativo para':['For bank transfers or MB WAY, send your receipt to','Por transferencia o MB WAY, envía el comprobante a'],
+  'Mais detalhes em 07 · Contribuir →':['More details in 07 · Give →','Más detalles en 07 · Contribuir →'],
+  'Progresso':['Progress','Progreso'],
+  'A Campanha':['The Campaign','La Campaña'],
+  'Não foi possível carregar os dados mais recentes. Tente novamente mais tarde.':['Could not load the latest data. Please try again later.','No se pudieron cargar los datos más recientes. Inténtalo más tarde.'],
+  'Angariado até agora':['Raised so far','Recaudado hasta ahora'],
+  'de 36 000 € ·':['of €36,000 ·','de 36 000 € ·'],
+  'm² construídos de 300':['m² built of 300','m² construidos de 300'],
+  'contribuições':['contributions','contribuciones'],
+  'últimos 7 dias':['last 7 days','últimos 7 días'],
+  'faltam':['still needed','faltan'],
+  'PLANTA · 300 m² · 20 × 15':['FLOOR PLAN · 300 m² · 20 × 15','PLANO · 300 m² · 20 × 15'],
+  'ESC. 1 □ = 1 m² = 120 €':['SCALE 1 □ = 1 m² = €120','ESC. 1 □ = 1 m² = 120 €'],
+  'pago':['paid','pagado'],
+  'Meta 1':['Goal 1','Meta 1'],'Meta 2':['Goal 2','Meta 2'],'Meta 3':['Goal 3','Meta 3'],
+  'a seguir':['next','siguiente'],
+  'Faseamento · 15 000 € · 11 000 € · 10 000 €':['Phases · €15,000 · €11,000 · €10,000','Fases · 15 000 € · 11 000 € · 10 000 €'],
+  'Metas a acompanhar as obras':['Goals that follow the works','Metas que acompañan las obras'],
+  'Diário de obra':['Site log','Diario de obra'],
+  'm² construídos ao longo do tempo':['m² built over time','m² construidos a lo largo del tiempo'],
+  'Últimas entradas':['Latest entries','Últimas entradas'],
+  'Só contam valores pagos · Nomes não divulgados':['Only paid amounts count · Names are never shown','Solo cuentan los importes pagados · No se muestran nombres'],
+  '01 · A visão':['01 · The vision','01 · La visión'],
+  'Cada um constrói a sua parte':['Everyone builds their part','Cada uno construye su parte'],
+  'Quando os muros de Jerusalém foram reconstruídos, cada família assumiu o troço em frente à sua casa. Ninguém fez tudo, mas todos fizeram alguma coisa.':['When the walls of Jerusalem were rebuilt, each family took on the section in front of their own house. No one did everything, but everyone did something.','Cuando se reconstruyeron los muros de Jerusalén, cada familia asumió el tramo frente a su casa. Nadie lo hizo todo, pero todos hicieron algo.'],
+  '— Neemias 3':['— Nehemiah 3','— Nehemías 3'],
+  'A nossa nova casa tem cerca de 300 m².':['Our new home has about 300 m².','Nuestra nueva casa tiene unos 300 m².'],
+  'Convidamos cada pessoa e família a assumir a sua parte — metro a metro — até à inauguração.':['We invite every person and family to take on their part — metre by metre — until the opening.','Invitamos a cada persona y familia a asumir su parte — metro a metro — hasta la inauguración.'],
+  'FIG. 1 · O NOVO ESPAÇO, ANTES DAS OBRAS':['FIG. 1 · THE NEW SPACE, BEFORE THE WORKS','FIG. 1 · EL NUEVO ESPACIO, ANTES DE LAS OBRAS'],
+  '02 · O novo espaço':['02 · The new space','02 · El nuevo espacio'],
+  'O que vamos construir':['What we will build','Lo que vamos a construir'],
+  'FIG. 2 · SALÃO COM PALCO E PLATEIA, ENTRADA COM BAR, SALA POLIVALENTE, SALAS DE APOIO E INSTALAÇÕES SANITÁRIAS':['FIG. 2 · MAIN HALL WITH STAGE AND SEATING, ENTRANCE WITH BAR, MULTI-PURPOSE ROOM, SUPPORT ROOMS AND RESTROOMS','FIG. 2 · SALÓN CON ESCENARIO Y PLATEA, ENTRADA CON BAR, SALA POLIVALENTE, SALAS DE APOYO Y ASEOS'],
+  'Salão principal':['Main hall','Salón principal'],
+  'Entrada e bar':['Entrance and bar','Entrada y bar'],
+  'Sala polivalente':['Multi-purpose room','Sala polivalente'],
+  'Salas de apoio, WC e duches':['Support rooms, WC and showers','Salas de apoyo, aseos y duchas'],
+  'Total':['Total','Total'],
+  '03 · Os números':['03 · The numbers','03 · Los números'],
+  'Um m², um preço simples':['One m², one simple price','Un m², un precio sencillo'],
+  'Área total do projeto':['Total project area','Superficie total del proyecto'],
+  'Custo das obras (≈ 113 €/m²)':['Cost of the works (≈ €113/m²)','Coste de las obras (≈ 113 €/m²)'],
+  'Valor de cada m² na campanha':['Value of each m² in the campaign','Valor de cada m² en la campaña'],
+  'Objetivo da campanha':['Campaign goal','Objetivo de la campaña'],
+  '* A diferença entre o objetivo e o custo (2 118 €) fica como margem para imprevistos das obras.':['* The difference between the goal and the cost (€2,118) is kept as a contingency for the works.','* La diferencia entre el objetivo y el coste (2 118 €) queda como margen para imprevistos de las obras.'],
+  '04 · Como funciona':['04 · How it works','04 · Cómo funciona'],
+  'Uma grelha, 300 quadrados':['One grid, 300 squares','Una cuadrícula, 300 cuadrados'],
+  'Grelha digital':['Digital grid','Cuadrícula digital'],
+  '300 quadrados, um por m². A grelha é atualizada todos os dias nesta página e partilhada nos grupos de WhatsApp.':['300 squares, one per m². The grid is updated every day on this page and shared in the WhatsApp groups.','300 cuadrados, uno por m². La cuadrícula se actualiza todos los días en esta página y se comparte en los grupos de WhatsApp.'],
+  'Transparência':['Transparency','Transparencia'],
+  'Ponto de situação mensal e relatório final na inauguração.':['Monthly update and a final report at the opening.','Informe mensual y memoria final en la inauguración.'],
+  'METAS POR FASE · 15 000 € · 11 000 € · 10 000 €':['GOALS BY PHASE · €15,000 · €11,000 · €10,000','METAS POR FASE · 15 000 € · 11 000 € · 10 000 €'],
+  'META 1':['GOAL 1','META 1'],'META 2':['GOAL 2','META 2'],'META 3':['GOAL 3','META 3'],
+  'Novembro':['November','Noviembre'],'Dezembro':['December','Diciembre'],'Janeiro':['January','Enero'],'Janeiro 2027':['January 2027','Enero 2027'],
+  '05 · Formas de contribuir':['05 · Ways to give','05 · Formas de contribuir'],
+  'Escolha o seu metro quadrado':['Choose your square metre','Elige tu metro cuadrado'],
+  'Todos podem':['Everyone can','Todos pueden'],
+  'Pessoal':['Personal','Personal'],
+  'Contribuição padrão':['Standard gift','Contribución estándar'],
+  'Família':['Family','Familia'],
+  'Compromisso maior':['Bigger commitment','Compromiso mayor'],
+  'Prefere repartir?':['Prefer to spread it out?','¿Prefieres repartirlo?'],
+  '40 €/mês de novembro a janeiro = 1 m²':['€40/month from November to January = 1 m²','40 €/mes de noviembre a enero = 1 m²'],
+  'Qualquer valor conta.':['Every amount counts.','Cualquier importe cuenta.'],
+  'Todas as ofertas são somadas e pintadas na grelha.':['All gifts are added up and painted on the grid.','Todas las ofrendas se suman y se pintan en la cuadrícula.'],
+  '06 · Calendário 2026–27':['06 · Timeline 2026–27','06 · Calendario 2026–27'],
+  'Plano de obra':['Works plan','Plan de obra'],
+  '25 Out':['25 Oct','25 Oct'],
+  'Anúncio':['Announcement','Anuncio'],
+  'Apresentar a campanha na última celebração no espaço atual.':['Present the campaign at the last service in the current space.','Presentar la campaña en la última celebración en el espacio actual.'],
+  '1 Nov':['1 Nov','1 Nov'],
+  'Lançamento':['Launch','Lanzamiento'],
+  'Grelha digital lançada na 1ª celebração no espaço novo.':['Digital grid launched at the first service in the new space.','Cuadrícula digital lanzada en la 1.ª celebración en el espacio nuevo.'],
+  'Meta 1: 15 000 €. Acompanha a 2ª fase de obras.':['Goal 1: €15,000. Covers the 2nd phase of works.','Meta 1: 15 000 €. Acompaña la 2.ª fase de obras.'],
+  'Meta 2: +11 000 € (26 000 € acumulados). Acompanha a 3ª fase de obras.':['Goal 2: +€11,000 (€26,000 in total). Covers the 3rd phase of works.','Meta 2: +11 000 € (26 000 € acumulados). Acompaña la 3.ª fase de obras.'],
+  'Jan 2027':['Jan 2027','Ene 2027'],
+  'Meta 3: +10 000 € (36 000 € acumulados). Inauguração oficial.':['Goal 3: +€10,000 (€36,000 in total). Official opening.','Meta 3: +10 000 € (36 000 € acumulados). Inauguración oficial.'],
+  '07 · Contribuir':['07 · Give','07 · Contribuir'],
+  'Como contribuir':['How to give','Cómo contribuir'],
+  'Abrir':['Open','Abre'],
+  'Indicar':['Enter','Indica'],
+  'o valor e o telemóvel associado ao MB WAY':['the amount and the mobile number linked to MB WAY','el importe y el móvil asociado a MB WAY'],
+  'Comunidade:':['Community:','Comunidad:'],
+  'escolher Moita & Barreiro':['choose Moita & Barreiro','elige Moita & Barreiro'],
+  'Categoria:':['Category:','Categoría:'],
+  'escolher «Obras Nova Moita&barreiro»':['choose «Obras Nova Moita&barreiro»','elige «Obras Nova Moita&barreiro»'],
+  'Cada 120 € =':['Every €120 =','Cada 120 € ='],
+  '1 quadrado pintado':['1 painted square','1 cuadrado pintado'],
+  'OUTRAS FORMAS DE CONTRIBUIR':['OTHER WAYS TO GIVE','OTRAS FORMAS DE CONTRIBUIR'],
+  'Transferência bancária':['Bank transfer','Transferencia bancaria'],
+  'Copiar IBAN':['Copy IBAN','Copiar IBAN'],
+  'O nome pode aparecer como «Marcele» (a nossa tesoureira) ou «CCLX».':['The name may show as «Marcele» (our treasurer) or «CCLX».','El nombre puede aparecer como «Marcele» (nuestra tesorera) o «CCLX».'],
+  'Copiar número':['Copy number','Copiar número'],
+  'Importante:':['Important:','Importante:'],
+  'se contribuíres por transferência bancária ou MB WAY, envia o teu comprovativo para':['if you give by bank transfer or MB WAY, send your receipt to','si contribuyes por transferencia bancaria o MB WAY, envía tu comprobante a'],
+  'para que a oferta seja contabilizada nesta campanha.':['so your gift is counted in this campaign.','para que la ofrenda se contabilice en esta campaña.'],
+  'Juntos, construímos':['Together, we build','Juntos, construimos'],
+  '1 m² = 120 € ·':['1 m² = €120 ·','1 m² = 120 € ·'],
+  '«Cada um contribua segundo propôs no seu coração… porque Deus ama ao que dá com alegria.»':['«Every man according as he purposeth in his heart, so let him give… for God loveth a cheerful giver.»','«Cada uno dé como propuso en su corazón… porque Dios ama al dador alegre.»'],
+  '2 Coríntios 9:7':['2 Corinthians 9:7','2 Corintios 9:7'],
+  'METRO A METRO · CAMPANHA DAS OBRAS · MOITA & BARREIRO':['METRO A METRO · BUILDING CAMPAIGN · MOITA & BARREIRO','METRO A METRO · CAMPAÑA DE LAS OBRAS · MOITA & BARREIRO'],
+  'Ver os detalhes da campanha':['See the campaign details','Ver los detalles de la campaña'],
+  'Secções':['Sections','Secciones'],
+  'Idioma':['Language','Idioma'],
+  'Progresso para o objetivo de 36 000 €':['Progress towards the €36,000 goal','Progreso hacia el objetivo de 36 000 €'],
+  'Grelha de 300 quadrados':['Grid of 300 squares','Cuadrícula de 300 cuadrados'],
+  'Gráfico dos m² acumulados':['Chart of cumulative m²','Gráfico de m² acumulados'],
+  'Membros da comunidade de mãos dadas em círculo no novo espaço':['Community members holding hands in a circle in the new space','Miembros de la comunidad tomados de la mano en círculo en el nuevo espacio'],
+  'Planta 3D do novo espaço: salão com palco e plateia, entrada com bar, sala polivalente e salas de apoio':['3D plan of the new space: hall with stage and seating, entrance with bar, multi-purpose room and support rooms','Plano 3D del nuevo espacio: salón con escenario y platea, entrada con bar, sala polivalente y salas de apoyo'],
+  'Modo noite':['Night mode','Modo noche'],'Modo dia':['Day mode','Modo día'],
+  /* dynamic */
+  '120 €':['€120','120 €'],'36 000 €':['€36,000','36 000 €'],'33 882 €':['€33,882','33 882 €'],'15 000 €':['€15,000','15 000 €'],'26 000 €':['€26,000','26 000 €'],'30 €':['€30','30 €'],'60 €':['€60','60 €'],'600 €':['€600','600 €'],'1 200 €':['€1,200','1 200 €'],
+  'Copiado ✓':['Copied ✓','Copiado ✓'],
+  '% DO OBJETIVO':['% OF GOAL','% DEL OBJETIVO'],
+  'OBJETIVO ATINGIDO':['GOAL REACHED','OBJETIVO ALCANZADO'],
+  'META 1 EM OBRA':['GOAL 1 UNDER WAY','META 1 EN OBRA'],'META 2 EM OBRA':['GOAL 2 UNDER WAY','META 2 EN OBRA'],'META 3 EM OBRA':['GOAL 3 UNDER WAY','META 3 EN OBRA'],
+  ' m² CONSTRUÍDOS · FALTAM ':[' m² BUILT · STILL NEEDED: ',' m² CONSTRUIDOS · FALTAN '],
+  ' de 300 quadrados pintados':[' of 300 squares painted',' de 300 cuadrados pintados'],
+  'Concluída':['Completed','Completada'],'Em obra':['Under way','En obra'],'Por iniciar':['Not started','Por empezar'],
+  ' acumulados':[' in total',' acumulados'],' de ':[' of ',' de '],' nesta fase':[' in this phase',' en esta fase'],
+  'Ainda sem entradas':['No entries yet','Aún no hay entradas'],
+  'OUT':['OCT','OCT'],'NOV':['NOV','NOV'],'DEZ':['DEC','DIC'],'JAN':['JAN','ENE'],
+  'ÚLTIMA ATUALIZAÇÃO: ':['LAST UPDATE: ','ÚLTIMA ACTUALIZACIÓN: ']
+  };
+  function t(s){if(LANG==='pt')return s;var e=D[s];return e?e[LANG==='en'?0:1]:s}
+  // EN gridcap reads "28.3 m² BUILT · 271.7 m² TO GO" — handled by suffix below
+  var TN=[],AT=[];
+  (function collect(){
+    var w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{acceptNode:function(n){var p=n.parentNode;if(!p||/^(SCRIPT|STYLE)$/.test(p.nodeName))return NodeFilter.FILTER_REJECT;return n.nodeValue.trim()&&D[n.nodeValue.trim()]?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT}});
+    var n;while(n=w.nextNode()){var v=n.nodeValue,k=v.trim();TN.push({n:n,pre:v.slice(0,v.indexOf(k)),post:v.slice(v.indexOf(k)+k.length),k:k})}
+    [].forEach.call(document.querySelectorAll('[alt],[aria-label],[title]'),function(el){['alt','aria-label','title'].forEach(function(a){var v=el.getAttribute(a);if(v&&D[v])AT.push({el:el,a:a,k:v})})});
+  })();
+  var TITLES={pt:'Metro a Metro · Moita & Barreiro',en:'Metro a Metro · Moita & Barreiro — Building campaign',es:'Metro a Metro · Moita & Barreiro — Campaña de las obras'};
+  function setLang(l,save){
+    LANG=l;document.documentElement.lang=l==='pt'?'pt-PT':l;document.title=TITLES[l];
+    TN.forEach(function(x){x.n.nodeValue=x.pre+t(x.k)+x.post});
+    AT.forEach(function(x){x.el.setAttribute(x.a,t(x.k))});
+    [].forEach.call(document.querySelectorAll('.copy'),function(b){b.textContent=t(b.dataset.label)});
+    [].forEach.call(document.querySelectorAll('.seg button'),function(b){b.setAttribute('aria-pressed',b.dataset.lang===l)});
+    syncTheme();
+    if(DATA)render(DATA);
+    if(save){try{localStorage.setItem('mam-lang',l)}catch(e){}}
+  }
+  var MOON='<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>',SUN='<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>';
+  function syncTheme(){var dk=document.documentElement.getAttribute('data-theme')==='dark';var b=document.getElementById('theme');b.setAttribute('aria-label',t(dk?'Modo dia':'Modo noite'));b.title=t(dk?'Modo dia':'Modo noite');document.getElementById('ticon').innerHTML=dk?SUN:MOON}
+  document.getElementById('theme').addEventListener('click',function(){var dk=document.documentElement.getAttribute('data-theme')!=='dark';document.documentElement.setAttribute('data-theme',dk?'dark':'light');try{localStorage.setItem('mam-theme',dk?'dark':'light')}catch(e){}syncTheme()});
+  [].forEach.call(document.querySelectorAll('.seg button'),function(b){b.addEventListener('click',function(){setLang(b.dataset.lang,true)})});
   var GOAL=36000, M2=120, N=300;
-  var num=function(v,d){var s=Number(v).toFixed(d||0).split('.');return s[0].replace(/\B(?=(\d{3})+(?!\d))/g,' ')+(s[1]?','+s[1]:'')};
-  var eur=function(v){return num(Math.round(v),0)+' €'};
+  var num=function(v,d){var s=Number(v).toFixed(d||0).split('.'),en=LANG==='en';return s[0].replace(/\B(?=(\d{3})+(?!\d))/g,en?',':'\u00a0')+(s[1]?(en?'.':',')+s[1]:'')};
+  var eur=function(v){return LANG==='en'?'€'+num(Math.round(v),0):num(Math.round(v),0)+'\u00a0€'};
   var pd=function(s){var m=String(s).match(/(\d{4})-(\d{2})-(\d{2})[ T](\d{2}):(\d{2})/);return m?new Date(+m[1],m[2]-1,+m[3],+m[4],+m[5]):new Date(s)};
   var dfmt=function(d){return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear()};
 
@@ -518,13 +709,13 @@ footer .wrap{border-top:1px solid #444;padding-top:18px}
   if(location.hash==='#campanha'||location.hash==='#contribuir'){show('campanha');if(location.hash==='#contribuir')setTimeout(function(){document.getElementById('contribuir').scrollIntoView()},50)}
 
   [].forEach.call(document.querySelectorAll('.copy'),function(b){b.addEventListener('click',function(){
-    try{navigator.clipboard.writeText(b.dataset.copy).then(function(){b.textContent='Copiado ✓';setTimeout(function(){b.textContent=b.dataset.label},1800)})}catch(e){}
+    try{navigator.clipboard.writeText(b.dataset.copy).then(function(){b.textContent=t('Copiado ✓');setTimeout(function(){b.textContent=t(b.dataset.label)},1800)})}catch(e){}
   })});
 
   var mini=document.getElementById('mini');for(var k=0;k<120;k++)mini.appendChild(document.createElement('i'));
 
   var grid=document.getElementById('grid'),cells=[],boxes=[];
-  for(var i=0;i<N;i++){var s=document.createElement('div');var v0=i*M2;s.className='sq '+(v0<15000?'m1':v0<26000?'m2':'m3');s.title='m² '+String(i+1).padStart(3,'0')+' · '+(v0<15000?'Meta 1':v0<26000?'Meta 2':'Meta 3');var f=document.createElement('i');var n=document.createElement('b');n.textContent=String(i+1).padStart(3,'0');s.appendChild(f);s.appendChild(n);grid.appendChild(s);cells.push(f);boxes.push(s)}
+  for(var i=0;i<N;i++){var s=document.createElement('div');var v0=i*M2;s.className='sq '+(v0<15000?'m1':v0<26000?'m2':'m3');s.dataset.meta=(v0<15000?'Meta 1':v0<26000?'Meta 2':'Meta 3');var f=document.createElement('i');var n=document.createElement('b');n.textContent=String(i+1).padStart(3,'0');s.appendChild(f);s.appendChild(n);grid.appendChild(s);cells.push(f);boxes.push(s)}
 
   function render(d){
     var rows=(d.rows||[]).filter(function(r){return r.paid!==false}).map(function(r){return{date:pd(r.date),amount:+r.amount||0}}).sort(function(a,b){return a.date-b.date});
@@ -532,19 +723,20 @@ footer .wrap{border-top:1px solid #444;padding-top:18px}
     var m2=paid/M2, full=Math.floor(m2), frac=m2-full, pct=Math.min(paid/GOAL,1);
     document.getElementById('amount').textContent=eur(paid);
     document.getElementById('pct').textContent=num(pct*100,1)+'%';
-    var bw=document.getElementById('barwrap');bw.setAttribute('aria-valuenow',paid);bw.setAttribute('aria-valuetext',eur(paid)+' de 36 000 €');
-    document.getElementById('s-m2').textContent=num(Math.min(m2,N),1).replace(/,0$/,'');
+    var bw=document.getElementById('barwrap');bw.setAttribute('aria-valuenow',paid);bw.setAttribute('aria-valuetext',eur(paid)+' '+t('de 36 000 €'));
+    document.getElementById('s-m2').textContent=num(Math.min(m2,N),1).replace(/[,.]0$/,'');
     document.getElementById('s-n').textContent=rows.length;
     var ref=d.refreshedAt?new Date(d.refreshedAt):new Date(), wk=new Date(ref.getTime()-7*864e5);
     document.getElementById('s-7').textContent=eur(rows.filter(function(r){return r.date>=wk}).reduce(function(a,r){return a+r.amount},0));
     document.getElementById('s-left').textContent=eur(Math.max(GOAL-paid,0));
     document.getElementById('h-amt').textContent=eur(paid);
-    document.getElementById('h-pct').textContent=num(pct*100,1)+'% DO OBJETIVO';
-    document.getElementById('h-m2').textContent=num(Math.min(m2,N),1).replace(/,0$/,'')+' / 300 m²';
-    document.getElementById('h-meta').textContent=paid>=36000?'OBJETIVO ATINGIDO':paid>=26000?'META 3 EM OBRA':paid>=15000?'META 2 EM OBRA':'META 1 EM OBRA';
+    document.getElementById('h-pct').textContent=num(pct*100,1)+t('% DO OBJETIVO');
+    document.getElementById('h-m2').textContent=num(Math.min(m2,N),1).replace(/[,.]0$/,'')+' / 300 m²';
+    document.getElementById('h-meta').textContent=t(paid>=36000?'OBJETIVO ATINGIDO':paid>=26000?'META 3 EM OBRA':paid>=15000?'META 2 EM OBRA':'META 1 EM OBRA');
     requestAnimationFrame(function(){document.getElementById('h-bar').style.width=(pct*100)+'%'});
-    document.getElementById('gridcap').textContent=num(Math.min(m2,N),1).replace(/,0$/,'')+' m² CONSTRUÍDOS · FALTAM '+num(Math.max(N-m2,0),1).replace(/,0$/,'')+' m²';
-    grid.setAttribute('aria-label',Math.min(full,N)+' de 300 quadrados pintados');
+    document.getElementById('gridcap').textContent=num(Math.min(m2,N),1).replace(/[,.]0$/,'')+t(' m² CONSTRUÍDOS · FALTAM ')+num(Math.max(N-m2,0),1).replace(/[,.]0$/,'')+' m²';
+    grid.setAttribute('aria-label',Math.min(full,N)+t(' de 300 quadrados pintados'));
+    boxes.forEach(function(b,i){b.title='m² '+String(i+1).padStart(3,'0')+' · '+t(b.dataset.meta)});
     requestAnimationFrame(function(){
       document.getElementById('bar').style.width=(pct*100)+'%';
       cells.forEach(function(c,i){var w=i<full?100:(i===full?frac*100:0);c.style.transitionDelay=(Math.min(i,full)*12)+'ms';c.style.width=w+'%';if(w===100)boxes[i].classList.add('on')});
@@ -554,32 +746,33 @@ footer .wrap{border-top:1px solid #444;padding-top:18px}
     var defs=[['META 1','Novembro',0,15000,'125 m²'],['META 2','Dezembro',15000,26000,'≈ 217 m²'],['META 3','Janeiro 2027',26000,36000,'300 m²']];
     var html='';defs.forEach(function(m,j){
       var lo=m[2],hi=m[3],sz=hi-lo,p=Math.max(0,Math.min((paid-lo)/sz,1)),st,cls;
-      if(paid>=hi){st='Concluída';cls='ok'}else if(paid>=lo){st='Em obra';cls='now'}else{st='Por iniciar';cls=''}
-      html+='<div class="ph ph'+(j+1)+'"><div class="top2"><span class="tag mt'+(j+1)+'">'+m[0]+' · '+m[1]+'</span><span class="stamp '+cls+'">'+st+'</span></div><div class="v">'+eur(sz)+'</div><div class="s">'+eur(hi)+' · '+m[4]+' acumulados</div><div class="pb"><span data-w="'+(p*100)+'"></span></div><div class="st">'+eur(Math.min(Math.max(paid-lo,0),sz))+' de '+eur(sz)+' nesta fase</div></div>';
+      if(paid>=hi){st=t('Concluída');cls='ok'}else if(paid>=lo){st=t('Em obra');cls='now'}else{st=t('Por iniciar');cls=''}
+      html+='<div class="ph ph'+(j+1)+'"><div class="top2"><span class="tag mt'+(j+1)+'">'+t(m[0])+' · '+t(m[1])+'</span><span class="stamp '+cls+'">'+st+'</span></div><div class="v">'+eur(sz)+'</div><div class="s">'+eur(hi)+' · '+m[4]+t(' acumulados')+'</div><div class="pb"><span data-w="'+(p*100)+'"></span></div><div class="st">'+eur(Math.min(Math.max(paid-lo,0),sz))+t(' de ')+eur(sz)+t(' nesta fase')+'</div></div>';
     });
     var me=document.getElementById('metas');me.innerHTML=html;
     requestAnimationFrame(function(){[].forEach.call(me.querySelectorAll('.pb span'),function(s){s.style.width=s.dataset.w+'%'})});
 
-    document.getElementById('recent').innerHTML=rows.slice(-8).reverse().map(function(r){return'<tr><td>'+dfmt(r.date)+'</td><td>'+num(r.amount/M2,2).replace(/,00$/,'')+' m²</td><td>'+eur(r.amount)+'</td></tr>'}).join('')||'<tr><td>Ainda sem entradas</td><td></td></tr>';
+    document.getElementById('recent').innerHTML=rows.slice(-8).reverse().map(function(r){return'<tr><td>'+dfmt(r.date)+'</td><td>'+num(r.amount/M2,2).replace(/[,.]00$/,'')+' m²</td><td>'+eur(r.amount)+'</td></tr>'}).join('')||'<tr><td>'+t('Ainda sem entradas')+'</td><td></td></tr>';
 
     var svg=document.getElementById('chart'),W=640,H=300,L=44,R=14,T=28,B=34;
     var start=new Date(2026,9,1), end=new Date(Math.max(new Date(2027,0,31),ref));
     var maxY=Math.max(150,Math.ceil((m2+10)/50)*50); if(maxY>300)maxY=300;
     var x=function(d){return L+(d-start)/(end-start)*(W-L-R)}, y=function(v){return H-B-(Math.min(v,maxY)/maxY)*(H-T-B)};
     var g='';
-    for(var v=0,stp=maxY<=150?25:50;v<=maxY;v+=stp){g+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(v)+'" y2="'+y(v)+'" stroke="#1d4f9140"/><text x="'+(L-8)+'" y="'+(y(v)+4)+'" fill="#1d4f91" font-family="IBM Plex Mono,monospace" font-size="11" text-anchor="end">'+Math.round(v)+'</text>'}
-    [[125,'META 1'],[216.7,'META 2'],[300,'META 3']].forEach(function(m){if(m[0]<=maxY)g+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(m[0])+'" y2="'+y(m[0])+'" stroke="#e8590c" stroke-width="1.5" stroke-dasharray="6 4"/><text x="'+(W-R)+'" y="'+(y(m[0])-6)+'" fill="#e8590c" font-family="IBM Plex Mono,monospace" font-size="11" font-weight="700" text-anchor="end">'+m[1]+' · '+num(m[0],1).replace(/,0$/,'')+' m²</text>'});
-    ['OUT','NOV','DEZ','JAN'].forEach(function(n,i){var d=new Date(2026,9+i,1);g+='<text x="'+(x(d)+3)+'" y="'+(H-12)+'" fill="#1d4f91" font-family="IBM Plex Mono,monospace" font-size="11">'+n+'</text><line x1="'+x(d)+'" x2="'+x(d)+'" y1="'+T+'" y2="'+(H-B)+'" stroke="#1d4f9125"/>'});
+    for(var v=0,stp=maxY<=150?25:50;v<=maxY;v+=stp){g+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(v)+'" y2="'+y(v)+'" class="gl"/><text x="'+(L-8)+'" y="'+(y(v)+4)+'" class="ax" font-family="IBM Plex Mono,monospace" font-size="11" text-anchor="end">'+Math.round(v)+'</text>'}
+    [[125,'META 1'],[216.7,'META 2'],[300,'META 3']].forEach(function(m){if(m[0]<=maxY)g+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(m[0])+'" y2="'+y(m[0])+'" stroke="#e8590c" stroke-width="1.5" stroke-dasharray="6 4"/><text x="'+(W-R)+'" y="'+(y(m[0])-6)+'" fill="#e8590c" font-family="IBM Plex Mono,monospace" font-size="11" font-weight="700" text-anchor="end">'+t(m[1])+' · '+num(m[0],1).replace(/[,.]0$/,'')+' m²</text>'});
+    [t('OUT'),t('NOV'),t('DEZ'),t('JAN')].forEach(function(n,i){var d=new Date(2026,9+i,1);g+='<text x="'+(x(d)+3)+'" y="'+(H-12)+'" class="ax" font-family="IBM Plex Mono,monospace" font-size="11">'+n+'</text><line x1="'+x(d)+'" x2="'+x(d)+'" y1="'+T+'" y2="'+(H-B)+'" class="gl"/>'});
     var acc=0,p='M'+x(start)+' '+y(0);
     rows.forEach(function(r){p+=' H'+x(r.date).toFixed(1);acc+=r.amount/M2;p+=' V'+y(acc).toFixed(1)});
     p+=' H'+x(ref).toFixed(1);
-    g+='<path d="'+p+' V'+y(0)+' Z" fill="#2f9e44" opacity=".35"/><path d="'+p+'" fill="none" stroke="#1b1b1b" stroke-width="2.5"/><rect x="'+(x(ref)-5)+'" y="'+(y(acc)-5)+'" width="10" height="10" fill="#1b1b1b"/><text x="'+(x(ref)+10)+'" y="'+(y(acc)-8)+'" fill="#1b1b1b" font-family="Barlow Condensed,Arial Narrow,sans-serif" font-weight="900" font-size="18">'+num(acc,1)+' m²</text>';
+    g+='<path d="'+p+' V'+y(0)+' Z" class="gr" opacity=".35"/><path d="'+p+'" fill="none" class="ln" stroke-width="2.5"/><rect x="'+(x(ref)-5)+'" y="'+(y(acc)-5)+'" width="10" height="10" class="lf"/><text x="'+(x(ref)+10)+'" y="'+(y(acc)-8)+'" class="lf" font-family="Barlow Condensed,Arial Narrow,sans-serif" font-weight="900" font-size="18">'+num(acc,1)+' m²</text>';
     svg.innerHTML=g;
 
     var u=d.refreshedAt?new Date(d.refreshedAt):null;
-    document.getElementById('upd').textContent=u?'ÚLTIMA ATUALIZAÇÃO: '+u.toLocaleDateString('pt-PT',{timeZone:'Europe/Lisbon'})+' · '+u.toLocaleTimeString('pt-PT',{timeZone:'Europe/Lisbon',hour:'2-digit',minute:'2-digit'}):'';
+    document.getElementById('upd').textContent=u?t('ÚLTIMA ATUALIZAÇÃO: ')+u.toLocaleDateString('pt-PT',{timeZone:'Europe/Lisbon'})+' · '+u.toLocaleTimeString('pt-PT',{timeZone:'Europe/Lisbon',hour:'2-digit',minute:'2-digit'}):'';
   }
-  fetch('data.json?t='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw r;return r.json()}).then(render).catch(function(){document.getElementById('err').style.display='block'});
+  (function(){var l='pt';try{l=localStorage.getItem('mam-lang')||''}catch(e){}if(!l){var q=new URLSearchParams(location.search).get('lang');l=q||((navigator.language||'pt').slice(0,2))}if(['pt','en','es'].indexOf(l)<0)l='pt';setLang(l)})();
+  fetch('data.json?t='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw r;return r.json()}).then(function(d){DATA=d;render(d)}).catch(function(){document.getElementById('err').style.display='block'});
 })();
 </script>
 </body>
