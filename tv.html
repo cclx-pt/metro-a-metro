@@ -15,9 +15,9 @@
 *{box-sizing:border-box}
 html,body{margin:0;height:100%;background:#000;overflow:hidden}
 body.idle{cursor:none}
-.tv-ctrl{position:fixed;top:14px;right:14px;z-index:10;display:flex;gap:8px;transition:opacity .3s}
+.tv-ctrl{position:fixed;top:0;right:0;z-index:10;display:flex;gap:0;transition:opacity .3s}
 body.idle .tv-ctrl{opacity:0;pointer-events:none}
-.tv-ctrl button,.tv-ctrl a{appearance:none;display:inline-flex;align-items:center;gap:8px;font:700 13px "IBM Plex Mono",monospace;letter-spacing:.06em;text-transform:uppercase;padding:9px 12px;border:2px solid #ece8de;background:#1b1b1b;color:#ece8de;cursor:pointer;text-decoration:none}
+.tv-ctrl button,.tv-ctrl a{appearance:none;display:inline-flex;align-items:center;gap:8px;font:700 10px "IBM Plex Mono",monospace;letter-spacing:.05em;text-transform:uppercase;padding:3px 8px;gap:4px;border:0;border-left:1px solid #444;background:#1b1b1b;color:#ece8de;cursor:pointer;text-decoration:none}
 .tv-ctrl button[aria-pressed="true"]{background:#f6c400;color:#1b1b1b;border-color:#f6c400}
 #stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform-origin:center center;background:var(--bg);color:var(--ink);font-family:var(--sans);display:flex;flex-direction:column;overflow:hidden}
 .tape{height:18px;flex:none;background:repeating-linear-gradient(-45deg,var(--yel) 0 18px,var(--dk) 18px 36px)}
