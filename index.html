@@ -101,6 +101,18 @@ a.hcard:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
 .hways .mut{color:var(--mut);font-size:13px}
 .hproof{margin-top:8px;font-size:13px;border-left:4px solid var(--org);padding:4px 0 4px 10px}
 .hproof a{font-weight:700}
+.giveband{display:grid;grid-template-columns:1.25fr 1fr 1fr 1.15fr;gap:0;margin-top:28px;padding:0;box-shadow:6px 6px 0 var(--yel)}
+.giveband .gb{padding:16px 18px;border-right:2px dashed var(--rule)}
+.giveband .gb:last-child{border-right:0}
+.giveband .gb1 .btn{width:100%;justify-content:center}
+.giveband .gk{font-size:14px}
+.giveband .gv{font-size:16px;font-weight:700;margin-top:4px;word-break:break-word}
+.giveband .gs{font-size:13px;margin-top:4px}
+.giveband .mut{color:var(--mut)}
+.giveband .copy{margin-top:8px}
+.giveband .hproof{margin-top:0}
+@media (max-width:900px){.giveband{grid-template-columns:1fr 1fr}.giveband .gb{border-bottom:2px dashed var(--rule)}.giveband .gb:nth-child(2n){border-right:0}.giveband .gb:nth-child(n+3){border-bottom:0}}
+@media (max-width:560px){.giveband{grid-template-columns:1fr}.giveband .gb{border-right:0;border-bottom:2px dashed var(--rule)}.giveband .gb:last-child{border-bottom:0}}
 .hlink{display:block;margin-top:10px;font:700 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--blue)}
 .spec{font:500 13px var(--mono);border:2px solid var(--blue);color:var(--blue);background:var(--paper-2);padding:10px 14px;line-height:1.7}
 .spec b{color:var(--ink)}
@@ -317,16 +329,26 @@ footer .wrap{border-top:1px solid #444;padding-top:18px}
           <span class="hlink">Ver detalhe da campanha →</span>
         </a>
         <div class="spec"><span class="tag b" style="margin-bottom:8px">Áreas</span><br>ÁREA ........ <b>300 m²</b><br>VALOR/m² .... <b>120 €</b><br>OBJETIVO .... <b>36 000 €</b><br>PRAZO ....... <b>NOV 2026 → JAN 2027</b></div>
-        <div class="hcard give2">
-          <a class="btn" href="https://contribuir.cclx.pt/" target="_blank" rel="noopener">Contribuir →</a>
-          <div class="hnote">Em <a href="https://contribuir.cclx.pt/" target="_blank" rel="noopener">contribuir.cclx.pt</a> · categoria «Obras Nova Moita&amp;barreiro»</div>
-          <ul class="hways">
-            <li><b>Transferência:</b> <span class="mono">PT50 0035 0181 0000 8604 9304 4</span></li>
-            <li><b>MB WAY:</b> <span class="mono">931 376 045</span> <span class="mut">(pode aparecer «Marcele», a nossa tesoureira, ou «CCLX»)</span></li>
-          </ul>
-          <div class="hproof">Por transferência ou MB WAY, envia o comprovativo para <a href="mailto:tesouraria@cclx.pt?subject=Comprovativo%20%E2%80%94%20Obras%20Nova%20Moita%26Barreiro">tesouraria@cclx.pt</a>.</div>
-          <a class="hlink" href="#contribuir">Mais detalhes em 07 · Contribuir →</a>
-        </div>
+      </div>
+    </div>
+    <div class="hcard giveband" id="contribuir-topo">
+      <div class="gb gb1">
+        <a class="btn" href="https://contribuir.cclx.pt/" target="_blank" rel="noopener">Contribuir →</a>
+        <div class="hnote">Em <a href="https://contribuir.cclx.pt/" target="_blank" rel="noopener">contribuir.cclx.pt</a> · categoria «Obras Nova Moita&amp;barreiro»</div>
+      </div>
+      <div class="gb">
+        <div class="gk"><b>Transferência:</b></div>
+        <div class="gv mono">PT50 0035 0181 0000 8604 9304 4</div>
+        <button class="copy" type="button" data-copy="PT50003501810000860493044" data-label="Copiar IBAN">Copiar IBAN</button>
+      </div>
+      <div class="gb">
+        <div class="gk"><b>MB WAY:</b></div>
+        <div class="gv mono">931 376 045</div>
+        <div class="mut gs">(pode aparecer «Marcele», a nossa tesoureira, ou «CCLX»)</div>
+      </div>
+      <div class="gb">
+        <div class="hproof">Por transferência ou MB WAY, envia o comprovativo para <a href="mailto:tesouraria@cclx.pt?subject=Comprovativo%20%E2%80%94%20Obras%20Nova%20Moita%26Barreiro">tesouraria@cclx.pt</a>.</div>
+        <a class="hlink" href="#contribuir">Mais detalhes em 07 · Contribuir →</a>
       </div>
     </div>
     <nav class="tabs" role="tablist" aria-label="Secções">
