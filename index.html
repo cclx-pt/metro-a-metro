@@ -15,7 +15,7 @@
 <style>
 :root{
   --paper:#f2efe6; --paper-2:#faf8f2; --ink:#1b1b1b; --ink-2:#3d3d3d; --mut:#6b6b66;
-  --yel:#f6c400; --yel-d:#d9ab00; --blue:#1d4f91; --blue-l:#d9e2ea; --line:#1d4f9155; --org:#e8590c;
+  --yel:#f6c400; --grn:#2f9e44; --m1:#fbe3a0; --m2:#cddcf0; --m3:#f9d2bc; --yel-d:#d9ab00; --blue:#1d4f91; --blue-l:#d9e2ea; --line:#1d4f9155; --org:#e8590c;
   --cond:"Barlow Condensed","Arial Narrow",sans-serif;
   --sans:"Barlow","Segoe UI",system-ui,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
@@ -81,7 +81,7 @@ nav.tabs{display:flex;gap:0;margin-top:30px;border-bottom:3px solid var(--ink)}
 .ruler{margin-top:22px}
 .ruler .r{height:26px;border:2px solid var(--ink);background:var(--paper-2);position:relative;overflow:hidden}
 .ruler .r:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 calc(100%/36 - 1px),#1b1b1b55 calc(100%/36 - 1px) calc(100%/36));pointer-events:none}
-.ruler .r span{display:block;height:100%;width:0;background:var(--yel);border-right:2px solid var(--ink);transition:width 1.2s ease}
+.ruler .r span{display:block;height:100%;width:0;background:var(--grn);border-right:2px solid var(--ink);transition:width 1.2s ease}
 .ruler .r i{position:absolute;top:0;bottom:0;width:2px;background:var(--ink)}
 .ticks{position:relative;height:22px;font:500 12px var(--mono);color:var(--ink-2)}
 .ticks span{position:absolute;top:4px;transform:translateX(-50%);white-space:nowrap}
@@ -94,26 +94,31 @@ nav.tabs{display:flex;gap:0;margin-top:30px;border-bottom:3px solid var(--ink)}
 .plan .hd{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font:700 12px var(--mono);color:var(--blue);margin-bottom:10px}
 .grid{display:grid;grid-template-columns:repeat(20,1fr);border-left:1px solid var(--line);border-top:1px solid var(--line)}
 .sq{aspect-ratio:1;border-right:1px solid var(--line);border-bottom:1px solid var(--line);position:relative;overflow:hidden}
-.sq>i{position:absolute;inset:0 auto 0 0;width:0;background:var(--yel);transition:width .3s ease}
+.sq.m1{background:var(--m1)} .sq.m2{background:var(--m2)} .sq.m3{background:var(--m3)}
+.sq.edge{box-shadow:inset 3px 0 0 var(--ink)}
+.sq>i{position:absolute;inset:0 auto 0 0;width:0;background:var(--grn);transition:width .3s ease}
 .sq>b{position:absolute;left:2px;bottom:1px;font:500 8px var(--mono);color:#1d4f9170;z-index:1}
-.sq.on>b{color:var(--ink)}
+.sq.on>b{color:#fff}
 .sq.next{outline:2px dashed var(--org);outline-offset:-2px}
 .plan .ft{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:10px;font:500 12px var(--mono);color:var(--ink-2)}
 .legend{display:flex;gap:14px}
 .legend span{display:inline-flex;gap:6px;align-items:center}
-.legend i{width:12px;height:12px;border:1px solid var(--ink);display:inline-block;background:var(--yel)}
-.legend i.e{background:var(--paper-2);border-color:var(--blue)}
+.legend{flex-wrap:wrap}
+.legend i{width:12px;height:12px;border:1px solid var(--ink);display:inline-block;background:var(--grn)}
+.legend i.l1{background:var(--m1)} .legend i.l2{background:var(--m2)} .legend i.l3{background:var(--m3)}
 .legend i.n{background:transparent;border:2px dashed var(--org)}
 
 section.block{margin-top:60px}
 .phases{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:22px;border:2px solid var(--ink);background:var(--paper-2)}
 .ph{padding:18px;border-right:2px solid var(--ink)}
 .ph:last-child{border-right:0}
+.ph1{border-top:8px solid var(--m1)} .ph2{border-top:8px solid var(--m2)} .ph3{border-top:8px solid var(--m3)}
+.tag.mt1{background:var(--m1);color:var(--ink)} .tag.mt2{background:var(--m2);color:var(--ink)} .tag.mt3{background:var(--m3);color:var(--ink)}
 .ph .top2{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .ph .v{font:900 44px/1 var(--cond);margin-top:12px}
 .ph .s{font:500 13px var(--mono);color:var(--mut)}
 .ph .pb{height:14px;border:2px solid var(--ink);margin-top:14px;background:#fff}
-.ph .pb span{display:block;height:100%;width:0;background:var(--yel);transition:width 1.2s ease}
+.ph .pb span{display:block;height:100%;width:0;background:var(--grn);transition:width 1.2s ease}
 .ph .st{font:500 13px var(--mono);margin-top:8px}
 .stamp{font:700 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border:2px solid var(--mut);color:var(--mut);transform:rotate(-3deg);white-space:nowrap}
 .stamp.now{border-color:var(--org);color:var(--org)}
@@ -290,7 +295,7 @@ footer .wrap{border-top:1px solid #444;padding-top:18px}
         <div class="grid" id="grid" role="img" aria-label="Grelha de 300 quadrados"></div>
         <div class="ft">
           <span id="gridcap">—</span>
-          <span class="legend"><span><i></i>pago</span><span><i class="n"></i>a seguir</span><span><i class="e"></i>por fazer</span></span>
+          <span class="legend"><span><i></i>pago</span><span><i class="l1"></i>Meta 1</span><span><i class="l2"></i>Meta 2</span><span><i class="l3"></i>Meta 3</span><span><i class="n"></i>a seguir</span></span>
         </div>
       </div>
     </div>
@@ -431,7 +436,7 @@ footer .wrap{border-top:1px solid #444;padding-top:18px}
           <div class="note" style="margin-bottom:10px">OUTRAS FORMAS DE CONTRIBUIR</div>
           <div class="card way"><span class="tag y">Transferência bancária</span><div class="v">IBAN PT50 0035 0181 0000 8604 9304 4</div><button class="copy" type="button" data-copy="PT50003501810000860493044" data-label="Copiar IBAN">Copiar IBAN</button></div>
           <div class="card way"><span class="tag y">MB WAY</span><div class="v">931 376 045</div><div class="wn">O nome pode aparecer como «Marcele» (a nossa tesoureira) ou «CCLX».</div><button class="copy" type="button" data-copy="931376045" data-label="Copiar número">Copiar número</button></div>
-          <div class="proof"><strong>Importante:</strong> envia o teu comprovativo para <a href="mailto:tesouraria@cclx.pt?subject=Comprovativo%20%E2%80%94%20Obras%20Nova%20Moita%26Barreiro">tesouraria@cclx.pt</a> para que a oferta seja contabilizada nesta campanha.</div>
+          <div class="proof"><strong>Importante:</strong> se contribuíres por transferência bancária ou MB WAY, envia o teu comprovativo para <a href="mailto:tesouraria@cclx.pt?subject=Comprovativo%20%E2%80%94%20Obras%20Nova%20Moita%26Barreiro">tesouraria@cclx.pt</a> para que a oferta seja contabilizada nesta campanha.</div>
         </div>
       </div>
     </div>
@@ -477,7 +482,7 @@ footer .wrap{border-top:1px solid #444;padding-top:18px}
   var mini=document.getElementById('mini');for(var k=0;k<120;k++)mini.appendChild(document.createElement('i'));
 
   var grid=document.getElementById('grid'),cells=[],boxes=[];
-  for(var i=0;i<N;i++){var s=document.createElement('div');s.className='sq';var f=document.createElement('i');var n=document.createElement('b');n.textContent=String(i+1).padStart(3,'0');s.appendChild(f);s.appendChild(n);grid.appendChild(s);cells.push(f);boxes.push(s)}
+  for(var i=0;i<N;i++){var s=document.createElement('div');var v0=i*M2;s.className='sq '+(v0<15000?'m1':v0<26000?'m2':'m3');s.title='m² '+String(i+1).padStart(3,'0')+' · '+(v0<15000?'Meta 1':v0<26000?'Meta 2':'Meta 3');var f=document.createElement('i');var n=document.createElement('b');n.textContent=String(i+1).padStart(3,'0');s.appendChild(f);s.appendChild(n);grid.appendChild(s);cells.push(f);boxes.push(s)}
 
   function render(d){
     var rows=(d.rows||[]).filter(function(r){return r.paid!==false}).map(function(r){return{date:pd(r.date),amount:+r.amount||0}}).sort(function(a,b){return a.date-b.date});
@@ -503,7 +508,7 @@ footer .wrap{border-top:1px solid #444;padding-top:18px}
     var html='';defs.forEach(function(m,j){
       var lo=m[2],hi=m[3],sz=hi-lo,p=Math.max(0,Math.min((paid-lo)/sz,1)),st,cls;
       if(paid>=hi){st='Concluída';cls='ok'}else if(paid>=lo){st='Em obra';cls='now'}else{st='Por iniciar';cls=''}
-      html+='<div class="ph"><div class="top2"><span class="tag'+(j===0?' y':j===1?' b':'')+'">'+m[0]+' · '+m[1]+'</span><span class="stamp '+cls+'">'+st+'</span></div><div class="v">'+eur(sz)+'</div><div class="s">'+eur(hi)+' · '+m[4]+' acumulados</div><div class="pb"><span data-w="'+(p*100)+'"></span></div><div class="st">'+eur(Math.min(Math.max(paid-lo,0),sz))+' de '+eur(sz)+' nesta fase</div></div>';
+      html+='<div class="ph ph'+(j+1)+'"><div class="top2"><span class="tag mt'+(j+1)+'">'+m[0]+' · '+m[1]+'</span><span class="stamp '+cls+'">'+st+'</span></div><div class="v">'+eur(sz)+'</div><div class="s">'+eur(hi)+' · '+m[4]+' acumulados</div><div class="pb"><span data-w="'+(p*100)+'"></span></div><div class="st">'+eur(Math.min(Math.max(paid-lo,0),sz))+' de '+eur(sz)+' nesta fase</div></div>';
     });
     var me=document.getElementById('metas');me.innerHTML=html;
     requestAnimationFrame(function(){[].forEach.call(me.querySelectorAll('.pb span'),function(s){s.style.width=s.dataset.w+'%'})});
@@ -521,7 +526,7 @@ footer .wrap{border-top:1px solid #444;padding-top:18px}
     var acc=0,p='M'+x(start)+' '+y(0);
     rows.forEach(function(r){p+=' H'+x(r.date).toFixed(1);acc+=r.amount/M2;p+=' V'+y(acc).toFixed(1)});
     p+=' H'+x(ref).toFixed(1);
-    g+='<path d="'+p+' V'+y(0)+' Z" fill="#f6c400" opacity=".55"/><path d="'+p+'" fill="none" stroke="#1b1b1b" stroke-width="2.5"/><rect x="'+(x(ref)-5)+'" y="'+(y(acc)-5)+'" width="10" height="10" fill="#1b1b1b"/><text x="'+(x(ref)+10)+'" y="'+(y(acc)-8)+'" fill="#1b1b1b" font-family="Barlow Condensed,Arial Narrow,sans-serif" font-weight="900" font-size="18">'+num(acc,1)+' m²</text>';
+    g+='<path d="'+p+' V'+y(0)+' Z" fill="#2f9e44" opacity=".35"/><path d="'+p+'" fill="none" stroke="#1b1b1b" stroke-width="2.5"/><rect x="'+(x(ref)-5)+'" y="'+(y(acc)-5)+'" width="10" height="10" fill="#1b1b1b"/><text x="'+(x(ref)+10)+'" y="'+(y(acc)-8)+'" fill="#1b1b1b" font-family="Barlow Condensed,Arial Narrow,sans-serif" font-weight="900" font-size="18">'+num(acc,1)+' m²</text>';
     svg.innerHTML=g;
 
     var u=d.refreshedAt?new Date(d.refreshedAt):null;
