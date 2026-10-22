@@ -193,6 +193,9 @@ table.areas{width:100%;border-collapse:collapse;border:2px solid var(--ink);back
 .way{padding:16px 18px;margin-bottom:14px}
 .way .v{font:700 17px var(--mono);margin-top:8px;word-break:break-word}
 .copy{appearance:none;background:var(--yel);border:2px solid var(--ink);font:700 12px var(--mono);text-transform:uppercase;letter-spacing:.08em;padding:6px 10px;margin-top:10px;cursor:pointer}
+.way .wn{font-size:14px;color:var(--mut);margin-top:4px}
+.proof{border:2px dashed var(--org);background:#fff8;padding:12px 16px;font-size:15px}
+.proof a{font-weight:700}
 .slogan{font:800 24px var(--cond);text-transform:uppercase;margin-top:16px}
 .slogan span{background:var(--yel);padding:0 6px}
 .closing{background:var(--ink);color:#fff;padding:56px 0 64px}
@@ -251,7 +254,7 @@ footer .wrap{border-top:1px solid #444;padding-top:18px}
       </div>
       <div class="hero-r">
         <div class="spec">ÁREA ........ <b>300 m²</b><br>VALOR/m² .... <b>120 €</b><br>OBJETIVO .... <b>36 000 €</b><br>PRAZO ....... <b>NOV 2026 → JAN 2027</b></div>
-        <a class="btn" href="https://contribuir.cclx.pt" target="_blank" rel="noopener">Contribuir →</a>
+        <a class="btn" href="https://contribuir.cclx.pt/" target="_blank" rel="noopener">Contribuir →</a>
       </div>
     </div>
     <nav class="tabs" role="tablist" aria-label="Secções">
@@ -417,16 +420,18 @@ footer .wrap{border-top:1px solid #444;padding-top:18px}
       <div class="give">
         <div>
           <ol>
-            <li><span><strong>Abrir</strong> <a href="https://contribuir.cclx.pt" target="_blank" rel="noopener">contribuir.cclx.pt</a></span></li>
+            <li><span><strong>Abrir</strong> <a href="https://contribuir.cclx.pt/" target="_blank" rel="noopener">contribuir.cclx.pt</a></span></li>
             <li><span><strong>Indicar</strong> o valor e o telemóvel associado ao MB WAY</span></li>
             <li><span><strong>Comunidade:</strong> escolher Moita &amp; Barreiro</span></li>
-            <li><span><strong>Categoria:</strong> escolher Obras Nova Moita&amp;Barreiro</span></li>
+            <li><span><strong>Categoria:</strong> escolher «Obras Nova Moita&amp;barreiro»</span></li>
           </ol>
           <div class="slogan">Cada 120 € = <span>1 quadrado pintado</span></div>
         </div>
         <div>
-          <div class="card way"><span class="tag y">Por transferência</span><div class="v">IBAN PT50 0035 0181 0000 8604 9304 4</div><button class="copy" type="button" id="copy">Copiar IBAN</button></div>
-          <div class="card way"><span class="tag y">Em mão</span><div class="v" style="font-family:var(--sans);font-weight:500">Caixa das obras em cada comunidade</div></div>
+          <div class="note" style="margin-bottom:10px">OUTRAS FORMAS DE CONTRIBUIR</div>
+          <div class="card way"><span class="tag y">Transferência bancária</span><div class="v">IBAN PT50 0035 0181 0000 8604 9304 4</div><button class="copy" type="button" data-copy="PT50003501810000860493044" data-label="Copiar IBAN">Copiar IBAN</button></div>
+          <div class="card way"><span class="tag y">MB WAY</span><div class="v">931 376 045</div><div class="wn">O nome pode aparecer como «Marcele» (a nossa tesoureira) ou «CCLX».</div><button class="copy" type="button" data-copy="931376045" data-label="Copiar número">Copiar número</button></div>
+          <div class="proof"><strong>Importante:</strong> envia o teu comprovativo para <a href="mailto:tesouraria@cclx.pt?subject=Comprovativo%20%E2%80%94%20Obras%20Nova%20Moita%26Barreiro">tesouraria@cclx.pt</a> para que a oferta seja contabilizada nesta campanha.</div>
         </div>
       </div>
     </div>
@@ -436,7 +441,7 @@ footer .wrap{border-top:1px solid #444;padding-top:18px}
     <div class="wrap">
       <div class="mini" aria-hidden="true" id="mini"></div>
       <h2>Juntos, construímos <span>300 m²</span></h2>
-      <div class="ml">1 m² = 120 € · <a href="https://contribuir.cclx.pt" target="_blank" rel="noopener">contribuir.cclx.pt</a></div>
+      <div class="ml">1 m² = 120 € · <a href="https://contribuir.cclx.pt/" target="_blank" rel="noopener">contribuir.cclx.pt</a></div>
       <blockquote>«Cada um contribua segundo propôs no seu coração… porque Deus ama ao que dá com alegria.»<cite>2 Coríntios 9:7</cite></blockquote>
     </div>
   </section>
@@ -465,9 +470,9 @@ footer .wrap{border-top:1px solid #444;padding-top:18px}
   });
   if(location.hash==='#campanha'||location.hash==='#contribuir'){show('campanha');if(location.hash==='#contribuir')setTimeout(function(){document.getElementById('contribuir').scrollIntoView()},50)}
 
-  document.getElementById('copy').addEventListener('click',function(){
-    var b=this;try{navigator.clipboard.writeText('PT50003501810000860493044').then(function(){b.textContent='Copiado ✓';setTimeout(function(){b.textContent='Copiar IBAN'},1800)})}catch(e){}
-  });
+  [].forEach.call(document.querySelectorAll('.copy'),function(b){b.addEventListener('click',function(){
+    try{navigator.clipboard.writeText(b.dataset.copy).then(function(){b.textContent='Copiado ✓';setTimeout(function(){b.textContent=b.dataset.label},1800)})}catch(e){}
+  })});
 
   var mini=document.getElementById('mini');for(var k=0;k<120;k++)mini.appendChild(document.createElement('i'));
 
