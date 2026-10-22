@@ -15,7 +15,7 @@
 <style>
 :root{
   --paper:#f2efe6; --paper-2:#faf8f2; --ink:#1b1b1b; --ink-2:#3d3d3d; --mut:#6b6b66;
-  --yel:#f6c400; --grn:#2f9e44; --m1:#fbe3a0; --m2:#cddcf0; --m3:#f9d2bc; --yel-d:#d9ab00; --blue:#1d4f91; --blue-l:#d9e2ea; --line:#1d4f9155; --org:#e8590c;
+  --yel:#f6c400; --grn:#2f9e44; --m1:#dce7f5; --m2:#b3c9e9; --m3:#86a7d6; --yel-d:#d9ab00; --blue:#1d4f91; --blue-l:#d9e2ea; --line:#1d4f9155; --org:#e8590c;
   --cond:"Barlow Condensed","Arial Narrow",sans-serif;
   --sans:"Barlow","Segoe UI",system-ui,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
@@ -59,6 +59,9 @@ h1{font:900 clamp(64px,10vw,128px)/.86 var(--cond);text-transform:uppercase;lett
 .hero{align-items:start}
 .hero-r{justify-self:stretch;display:flex;flex-direction:column;gap:12px;max-width:440px;margin-left:auto;width:100%}
 .hcard{background:var(--paper-2);border:2px solid var(--ink);padding:14px 16px}
+a.hcard{display:block;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s}
+a.hcard:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink)}
+a.hcard:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
 .hh{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .hh .small{font-size:12px;color:var(--blue)}
 .hamt{font:900 44px/1 var(--cond);margin-top:10px}
@@ -117,7 +120,7 @@ nav.tabs{display:flex;gap:0;margin-top:30px;border-bottom:3px solid var(--ink)}
 .sq.m1{background:var(--m1)} .sq.m2{background:var(--m2)} .sq.m3{background:var(--m3)}
 .sq.edge{box-shadow:inset 3px 0 0 var(--ink)}
 .sq>i{position:absolute;inset:0 auto 0 0;width:0;background:var(--grn);transition:width .3s ease}
-.sq>b{position:absolute;left:2px;bottom:1px;font:500 8px var(--mono);color:#1d4f9170;z-index:1}
+.sq>b{position:absolute;left:2px;bottom:1px;font:500 8px var(--mono);color:#16396aa0;z-index:1}
 .sq.on>b{color:#fff}
 .sq.next{outline:2px dashed var(--org);outline-offset:-2px}
 .plan .ft{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:10px;font:500 12px var(--mono);color:var(--ink-2)}
@@ -278,12 +281,13 @@ footer .wrap{border-top:1px solid #444;padding-top:18px}
         <p class="lead">Duas comunidades, um futuro. Uma campanha para todos ajudarmos a pagar as obras do novo espaço.</p>
       </div>
       <div class="hero-r">
-        <div class="hcard camp">
+        <a class="hcard camp" href="#campanha" aria-label="Ver os detalhes da campanha">
           <div class="hh"><span class="tag">Campanha</span><span class="mono small" id="h-meta">—</span></div>
           <div class="hamt"><span id="h-amt">—</span> <small>de 36 000 €</small></div>
           <div class="hbar"><span id="h-bar"></span><i style="left:41.667%"></i><i style="left:72.222%"></i></div>
           <div class="hrow mono"><span id="h-pct">—</span><span id="h-m2">—</span></div>
-        </div>
+          <span class="hlink">Ver detalhe da campanha →</span>
+        </a>
         <div class="spec"><span class="tag b" style="margin-bottom:8px">Áreas</span><br>ÁREA ........ <b>300 m²</b><br>VALOR/m² .... <b>120 €</b><br>OBJETIVO .... <b>36 000 €</b><br>PRAZO ....... <b>NOV 2026 → JAN 2027</b></div>
         <div class="hcard give2">
           <a class="btn" href="https://contribuir.cclx.pt/" target="_blank" rel="noopener">Contribuir →</a>
@@ -510,6 +514,7 @@ footer .wrap{border-top:1px solid #444;padding-top:18px}
   });
   function goGive(e){if(e)e.preventDefault();show('campanha');history.replaceState(null,'','#contribuir');setTimeout(function(){document.getElementById('contribuir').scrollIntoView({behavior:'smooth'})},30)}
   [].forEach.call(document.querySelectorAll('a[href="#contribuir"]'),function(l){l.addEventListener('click',goGive)});
+  [].forEach.call(document.querySelectorAll('a[href="#campanha"]'),function(l){l.addEventListener('click',function(e){e.preventDefault();show('campanha',true);document.querySelector('nav.tabs').scrollIntoView({behavior:'smooth'})})});
   if(location.hash==='#campanha'||location.hash==='#contribuir'){show('campanha');if(location.hash==='#contribuir')setTimeout(function(){document.getElementById('contribuir').scrollIntoView()},50)}
 
   [].forEach.call(document.querySelectorAll('.copy'),function(b){b.addEventListener('click',function(){
