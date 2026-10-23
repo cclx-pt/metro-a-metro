@@ -73,7 +73,12 @@ h3{font:800 24px/1.05 var(--cond);text-transform:uppercase}
 @media (max-width:560px){.brand img{height:34px}.brand .bn{font-size:24px}.brand .bc{font-size:18px}.ctrls{width:100%;justify-content:flex-end;margin-top:4px}}
 /* header */
 header{padding:0}
-.hero{margin-top:30px}
+.hero{margin-top:18px}
+.lastupd{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px;font:500 13px var(--mono);color:var(--ink-2);text-transform:uppercase;letter-spacing:.04em}
+.lastupd b{font-weight:700;color:var(--ink);background:var(--paper-2);border:2px solid var(--ink);padding:2px 8px}
+.lastupd .dot{width:10px;height:10px;border-radius:50%;background:var(--grn);box-shadow:0 0 0 3px #2f9e4433}
+.lastupd .lu-n{color:var(--mut)}
+@media (max-width:560px){.lastupd .lu-n{display:none}}
 .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:36px;align-items:end}
 h1{font:900 clamp(64px,10vw,128px)/.86 var(--cond);text-transform:uppercase;letter-spacing:-.02em;margin-top:18px}
 .slash{font:700 clamp(17px,2vw,22px) var(--mono);color:var(--blue);margin-top:14px}
@@ -304,6 +309,7 @@ footer .wrap{border-top:1px solid #444;padding-top:18px}
         <button type="button" class="theme" id="theme" aria-label="Modo noite"><svg id="ticon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
       </div>
     </div>
+    <div class="lastupd" aria-live="polite"><span class="dot" aria-hidden="true"></span><span class="lu-k">Última atualização:</span> <b id="top-upd">—</b><span class="lu-n">· atualiza às 08:43, 14:43 e 21:43</span></div>
     <div class="hero">
       <div>
         <span class="tag">Obra em curso</span>
@@ -654,6 +660,7 @@ footer .wrap{border-top:1px solid #444;padding-top:18px}
   '120 €':['€120','120 €'],'36 000 €':['€36,000','36 000 €'],'33 882 €':['€33,882','33 882 €'],'15 000 €':['€15,000','15 000 €'],'26 000 €':['€26,000','26 000 €'],'30 €':['€30','30 €'],'60 €':['€60','60 €'],'600 €':['€600','600 €'],'1 200 €':['€1,200','1 200 €'],
   'Mais informações sobre como contribuir →':['More information on how to give →','Más información sobre cómo contribuir →'],
   'Modo TV (16:9):':['TV mode (16:9):','Modo TV (16:9):'],'Escuro':['Dark','Oscuro'],'Claro':['Light','Claro'],
+  'Última atualização:':['Last update:','Última actualización:'],'· atualiza às 08:43, 14:43 e 21:43':['· updates at 08:43, 14:43 and 21:43 (Lisbon)','· se actualiza a las 08:43, 14:43 y 21:43'],
   'Copiado ✓':['Copied ✓','Copiado ✓'],
   '% DO OBJETIVO':['% OF GOAL','% DEL OBJETIVO'],
   'OBJETIVO ATINGIDO':['GOAL REACHED','OBJETIVO ALCANZADO'],
@@ -770,6 +777,7 @@ footer .wrap{border-top:1px solid #444;padding-top:18px}
     svg.innerHTML=g;
 
     var u=d.refreshedAt?new Date(d.refreshedAt):null;
+    document.getElementById('top-upd').textContent=u?u.toLocaleDateString('pt-PT',{timeZone:'Europe/Lisbon'})+' · '+u.toLocaleTimeString('pt-PT',{timeZone:'Europe/Lisbon',hour:'2-digit',minute:'2-digit'}):'—';
     document.getElementById('upd').textContent=u?t('ÚLTIMA ATUALIZAÇÃO: ')+u.toLocaleDateString('pt-PT',{timeZone:'Europe/Lisbon'})+' · '+u.toLocaleTimeString('pt-PT',{timeZone:'Europe/Lisbon',hour:'2-digit',minute:'2-digit'}):'';
   }
   (function(){var l='pt';try{l=localStorage.getItem('mam-lang')||''}catch(e){}var q=new URLSearchParams(location.search).get('lang');if(q)l=q;if(!l)l='pt';if(['pt','en','es'].indexOf(l)<0)l='pt';setLang(l)})();

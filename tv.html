@@ -28,7 +28,7 @@ body.idle .tv-ctrl{opacity:0;pointer-events:none}
 .top .bc{font:800 36px/1 var(--cond);text-transform:uppercase;color:var(--blue)}
 .top .title{margin-left:auto;text-align:right}
 .top .title b{display:block;font:900 64px/.9 var(--cond);text-transform:uppercase;letter-spacing:-.01em}
-.top .title span{font:700 18px var(--mono);color:var(--blue)}
+.top .title span{display:inline-block;margin-top:6px;font:700 20px var(--mono);color:var(--dk);background:var(--yel);padding:4px 10px}
 .main{flex:1;display:grid;grid-template-columns:1040px 1fr;gap:64px;padding:26px 64px 10px;min-height:0}
 .plan{display:flex;flex-direction:column;min-height:0}
 .grid{display:grid;grid-template-columns:repeat(20,1fr);gap:5px;width:1040px}
@@ -83,7 +83,7 @@ body.idle .tv-ctrl{opacity:0;pointer-events:none}
   <div class="top">
     <img src="logo.png" alt="CCLX">
     <span class="bn">CCLX</span><span class="sep"></span><span class="bc">Moita &amp; Barreiro</span>
-    <div class="title"><b>Metro a Metro</b><span>// cada m² da nossa nova casa</span></div>
+    <div class="title"><b>Metro a Metro</b><span id="upd-top">—</span></div>
   </div>
   <div class="main">
     <div class="plan">
@@ -154,6 +154,7 @@ body.idle .tv-ctrl{opacity:0;pointer-events:none}
     defs.forEach(function(m){var sz=m[2]-m[1],got=Math.min(Math.max(paid-m[1],0),sz),p=got/sz;h+='<div class="meta"><span class="k" style="background:'+m[3]+'">'+m[0]+'</span><div class="b"><span data-w="'+(p*100)+'"></span></div><span class="v'+(p>=1?' ok':'')+'">'+(p>=1?'✓ ':'')+eur(got)+' / '+eur(sz)+'</span></div>'});
     var me=document.getElementById('metas');me.innerHTML=h;
     var u=d.refreshedAt?new Date(d.refreshedAt):null;
+    document.getElementById('upd-top').textContent=u?'Atualizado: '+u.toLocaleDateString('pt-PT',{timeZone:'Europe/Lisbon'})+' · '+u.toLocaleTimeString('pt-PT',{timeZone:'Europe/Lisbon',hour:'2-digit',minute:'2-digit'}):'';
     document.getElementById('upd').textContent=u?'Atualizado em '+u.toLocaleDateString('pt-PT',{timeZone:'Europe/Lisbon'})+' às '+u.toLocaleTimeString('pt-PT',{timeZone:'Europe/Lisbon',hour:'2-digit',minute:'2-digit'})+' · só valores pagos':'';
     requestAnimationFrame(function(){
       document.getElementById('bar').style.width=(pct*100)+'%';
