@@ -78,16 +78,6 @@ header{padding:0}
 .lastupd b{font-weight:700;color:var(--ink);background:var(--paper-2);border:2px solid var(--ink);padding:2px 8px}
 .lastupd .dot{width:10px;height:10px;border-radius:50%;background:var(--grn);box-shadow:0 0 0 3px #2f9e4433}
 .lastupd .lu-n{color:var(--mut)}
-.refresh{appearance:none;margin-left:auto;display:inline-flex;align-items:center;gap:6px;background:var(--yel);color:var(--dk);border:2px solid var(--ink);font:700 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:5px 10px;cursor:pointer;box-shadow:3px 3px 0 var(--ink)}
-.refresh:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
-.refresh:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
-.refresh:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
-.refresh[disabled]{opacity:.7;cursor:wait}
-.refresh .ri{display:inline-block;font-size:15px;line-height:1}
-.refresh.spin .ri{animation:rspin .8s linear infinite}
-@keyframes rspin{to{transform:rotate(360deg)}}
-.runnow{font:700 12px var(--mono);color:var(--blue);text-transform:uppercase}
-@media (max-width:560px){.refresh{margin-left:0}}
 @media (max-width:560px){.lastupd .lu-n{display:none}}
 .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:36px;align-items:end}
 h1{font:900 clamp(64px,10vw,128px)/.86 var(--cond);text-transform:uppercase;letter-spacing:-.02em;margin-top:18px}
@@ -321,7 +311,7 @@ footer .wrap{border-top:1px solid #444;padding-top:18px}
         <button type="button" class="theme" id="theme" aria-label="Modo noite"><svg id="ticon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
       </div>
     </div>
-    <div class="lastupd" aria-live="polite"><span class="dot" aria-hidden="true"></span><span class="lu-k">Última atualização:</span> <b id="top-upd">—</b><span class="lu-n">· atualiza às 08:00, 14:00, 19:00 e 23:00</span><button type="button" class="refresh" id="refresh" title="Ir buscar os dados mais recentes"><span class="ri" aria-hidden="true">↻</span> <span class="rl">Atualizar agora</span></button><a class="runnow" id="runnow" href="https://claude.ai/code/routines/trig_01HdXz86qUoVYAw19nwehfxN" target="_blank" rel="noopener" hidden>▶ Correr sincronização (admin)</a></div>
+    <div class="lastupd" aria-live="polite"><span class="dot" aria-hidden="true"></span><span class="lu-k">Última atualização:</span> <b id="top-upd">—</b><span class="lu-n">· atualiza às 08:00, 14:00, 19:00 e 23:00</span></div>
     <div class="hero">
       <div>
         <span class="tag">Obra em curso</span>
@@ -661,7 +651,6 @@ footer .wrap{border-top:1px solid #444;padding-top:18px}
   'Mais informações sobre como contribuir →':['More information on how to give →','Más información sobre cómo contribuir →'],
   'Modo TV (16:9):':['TV mode (16:9):','Modo TV (16:9):'],'Escuro':['Dark','Oscuro'],'Claro':['Light','Claro'],
   'Última atualização:':['Last update:','Última actualización:'],'· atualiza às 08:00, 14:00, 19:00 e 23:00':['· updates at 08:00, 14:00, 19:00 and 23:00 (Lisbon)','· se actualiza a las 08:00, 14:00, 19:00 y 23:00'],
-  'Atualizar agora':['Refresh now','Actualizar ahora'],'Atualizado ✓':['Updated ✓','Actualizado ✓'],'Já está atualizado ✓':['Already up to date ✓','Ya está actualizado ✓'],'Erro, tenta de novo':['Error, try again','Error, inténtalo de nuevo'],'Ir buscar os dados mais recentes':['Load the latest data','Cargar los datos más recientes'],
   'Copiado ✓':['Copied ✓','Copiado ✓'],
   '% DO OBJETIVO':['% OF GOAL','% DEL OBJETIVO'],
   'OBJETIVO ATINGIDO':['GOAL REACHED','OBJETIVO ALCANZADO'],
@@ -772,20 +761,7 @@ footer .wrap{border-top:1px solid #444;padding-top:18px}
     document.getElementById('upd').textContent=u?t('ÚLTIMA ATUALIZAÇÃO: ')+u.toLocaleDateString('pt-PT',{timeZone:'Europe/Lisbon'})+' · '+u.toLocaleTimeString('pt-PT',{timeZone:'Europe/Lisbon',hour:'2-digit',minute:'2-digit'}):'';
   }
   (function(){var l='pt';try{l=localStorage.getItem('mam-lang')||''}catch(e){}var q=new URLSearchParams(location.search).get('lang');if(q)l=q;if(!l)l='pt';if(['pt','en','es'].indexOf(l)<0)l='pt';setLang(l)})();
-  var RB=document.getElementById('refresh');
-  function loadData(manual){
-    if(manual){RB.disabled=true;RB.classList.add('spin')}
-    var before=DATA&&DATA.refreshedAt;
-    return fetch('data.json?t='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw r;return r.json()}).then(function(d){
-      DATA=d;render(d);document.getElementById('err').style.display='none';
-      if(manual)flash(d.refreshedAt!==before?t('Atualizado ✓'):t('Já está atualizado ✓'));
-    }).catch(function(){document.getElementById('err').style.display='block';if(manual)flash(t('Erro, tenta de novo'))})
-    .then(function(){RB.disabled=false;RB.classList.remove('spin')});
-  }
-  function flash(msg){var l=RB.querySelector('.rl');l.textContent=msg;setTimeout(function(){l.textContent=t('Atualizar agora')},2500)}
-  RB.addEventListener('click',function(){loadData(true)});
-  loadData(false);setInterval(function(){loadData(false)},10*60*1000);
-  (function(){var q=new URLSearchParams(location.search).get('admin');try{if(q==='1')localStorage.setItem('mam-admin','1');if(q==='0')localStorage.removeItem('mam-admin');if(localStorage.getItem('mam-admin')==='1')document.getElementById('runnow').hidden=false}catch(e){}})();
+  fetch('data.json?t='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw r;return r.json()}).then(function(d){DATA=d;render(d)}).catch(function(){document.getElementById('err').style.display='block'});
 })();
 </script>
 </body>
