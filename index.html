@@ -745,11 +745,14 @@ footer .wrap{border-top:1px solid #444;padding-top:18px}
     var rows=(d.rows||[]).filter(function(r){return r.paid!==false}).map(function(r){return{date:pd(r.date),amount:+r.amount||0,type:r.type||(/ 12:00:00$/.test(r.date)?'Outro':'Ofertas')}}).sort(function(a,b){return a.date-b.date});
     var paid=rows.reduce(function(a,r){return a+r.amount},0);
     [].forEach.call(document.querySelectorAll('.ticks .miss'),function(m){var g=+m.dataset.goal;if(paid>=g){m.textContent='✓ '+t('Atingida');m.className='miss ok'}else{m.textContent=t('Faltam')+' '+eur(g-paid);m.className='miss'}});
-    (function(){var TY=['Ofertas','Transferência','MB WAY','Numerário','Outro'],C={},N={};
-      rows.forEach(function(r){var k=TY.indexOf(r.type)<0?'Outro':r.type;C[k]=(C[k]||0)+r.amount;N[k]=(N[k]||0)+1});
+    (function(){var BASE=['Ofertas','Transferência','MB WAY','Numerário'],C={},N={};
+      rows.forEach(function(r){var k=r.type||'Outro';C[k]=(C[k]||0)+r.amount;N[k]=(N[k]||0)+1});
+      var extra=Object.keys(C).filter(function(k){return BASE.indexOf(k)<0&&k!=='Outro'}).sort(function(a,b){return C[b]-C[a]});
+      var TY=BASE.concat(extra,['Outro']);
+      var col=function(k){var i=TY.indexOf(k);return k==='Outro'?'var(--ty5)':(i<4?'var(--ty'+(i+1)+')':['#2f9e44','#8e44ad','#16a085','#c0392b','#7f8c8d'][(i-4)%5])};
       var list=TY.filter(function(k){return C[k]>0||k==='Ofertas'}),mx=Math.max.apply(null,list.map(function(k){return C[k]||0}).concat([1])),tot=paid||1;
-      var st='<div class="stack" role="img" aria-label="'+t('Distribuição por origem')+'">'+list.map(function(k){return '<i style="background:var(--ty'+(TY.indexOf(k)+1)+')" data-w="'+((C[k]||0)/tot*100)+'"></i>'}).join('')+'</div>';
-      var rs='<div class="rows">'+list.map(function(k){var v=C[k]||0;return '<div class="trow"><span class="tl"><span class="sw" style="background:var(--ty'+(TY.indexOf(k)+1)+')"></span>'+t(k)+'</span><span class="tb"><span style="background:var(--ty'+(TY.indexOf(k)+1)+')" data-w="'+(v/mx*100)+'"></span></span><span class="tv">'+eur(v)+'</span><span class="tp">'+num(v/tot*100,1)+'%</span><span class="tn">'+(N[k]||0)+' '+t((N[k]||0)===1?'oferta':'ofertas')+'</span></div>'}).join('')+'</div>';
+      var st='<div class="stack" role="img" aria-label="'+t('Distribuição por origem')+'">'+list.map(function(k){return '<i style="background:'+col(k)+'" data-w="'+((C[k]||0)/tot*100)+'"></i>'}).join('')+'</div>';
+      var rs='<div class="rows">'+list.map(function(k){var v=C[k]||0;return '<div class="trow"><span class="tl"><span class="sw" style="background:'+col(k)+'"></span>'+t(k)+'</span><span class="tb"><span style="background:'+col(k)+'" data-w="'+(v/mx*100)+'"></span></span><span class="tv">'+eur(v)+'</span><span class="tp">'+num(v/tot*100,1)+'%</span><span class="tn">'+(N[k]||0)+' '+t((N[k]||0)===1?'oferta':'ofertas')+'</span></div>'}).join('')+'</div>';
       var box=document.getElementById('types');box.innerHTML=st+rs;
       requestAnimationFrame(function(){[].forEach.call(box.querySelectorAll('[data-w]'),function(x){x.style.width=x.dataset.w+'%'})});
     })();
