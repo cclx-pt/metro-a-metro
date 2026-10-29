@@ -138,8 +138,27 @@ nav.tabs{display:flex;gap:0;margin-top:30px;border-bottom:3px solid var(--ink)}
 .ruler .r:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 calc(100%/36 - 1px),var(--rule) calc(100%/36 - 1px) calc(100%/36));pointer-events:none}
 .ruler .r span{display:block;height:100%;width:0;background:var(--grn);border-right:2px solid var(--ink);transition:width 1.2s ease}
 .ruler .r i{position:absolute;top:0;bottom:0;width:2px;background:var(--ink)}
-.ticks{position:relative;height:40px;line-height:1.35;font:500 11px var(--mono);color:var(--ink-2)}
+.ticks{position:relative;height:58px;line-height:1.35;font:500 11px var(--mono);color:var(--ink-2)}
 .ticks span{position:absolute;top:4px;transform:translateX(-50%);white-space:nowrap}
+.ticks .miss{font-style:normal;font-weight:700;color:var(--org)}
+.ticks .miss.ok{color:var(--grn)}
+.types{padding:18px 20px}
+.types .stack{display:flex;height:22px;border:2px solid var(--ink);overflow:hidden;background:var(--white)}
+.types .stack i{display:block;height:100%;transition:width 1.2s ease}
+.types .trow{display:grid;grid-template-columns:150px 1fr 120px 70px;gap:14px;align-items:center;padding:10px 0;border-bottom:1px dashed var(--rule)}
+.types .trow:last-child{border-bottom:0}
+.types .tl{display:flex;align-items:center;gap:8px;font-weight:700}
+.types .sw{width:14px;height:14px;border:1px solid var(--ink);flex:none}
+.types .tb{height:14px;background:var(--white);border:1px solid var(--rule)}
+.types .tb span{display:block;height:100%;width:0;transition:width 1.2s ease}
+.types .tv{font:900 22px var(--cond);text-align:right;white-space:nowrap}
+.types .tp{font:500 13px var(--mono);color:var(--mut);text-align:right}
+.types .tn{grid-column:1/-1;margin-top:-6px;font:500 12px var(--mono);color:var(--mut)}
+.types .rows{margin-top:10px}
+@media (max-width:560px){.types .trow{grid-template-columns:1fr 90px 54px}.types .tb{grid-column:1/-1;order:5}.types .tn{order:6;margin-top:0}}
+:root{--ty1:#1d4f91;--ty2:#e8590c;--ty3:#d9ab00;--ty4:#3d3d3d;--ty5:#86a7d6}
+:root[data-theme="dark"]{--ty1:#7ea9e8;--ty2:#ff7a33;--ty3:#f6c400;--ty4:#c9c5bb;--ty5:#3b67a0}
+
 .stats{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:20px;border:2px solid var(--ink);background:var(--paper-2)}
 .stat{padding:14px 16px;border-right:2px solid var(--ink);border-bottom:2px solid var(--ink)}
 .stat:nth-child(2n){border-right:0} .stat:nth-child(n+3){border-bottom:0}
@@ -343,7 +362,7 @@ footer .wrap{border-top:1px solid #444;padding-top:18px}
         <div class="of">de 36 000 € · <b id="pct">—</b></div>
         <div class="ruler">
           <div class="r" role="progressbar" aria-label="Progresso para o objetivo de 36 000 €" aria-valuemin="0" aria-valuemax="36000" id="barwrap"><span id="bar"></span><i style="left:41.667%"></i><i style="left:72.222%"></i></div>
-          <div class="ticks" aria-hidden="true"><span style="left:0;transform:none">0</span><span style="left:41.667%;transform:translateX(-100%);text-align:right"><b>Meta 1 · Nov</b><br>15 000 €</span><span style="left:72.222%;transform:translateX(-100%);text-align:right"><b>Meta 2 · Dez</b><br>26 000 €</span><span style="left:100%;transform:translateX(-100%);text-align:right"><b>Meta 3 · Jan</b><br>36 000 €</span></div>
+          <div class="ticks" aria-hidden="true"><span style="left:0;transform:none">0</span><span style="left:41.667%;transform:translateX(-100%);text-align:right"><b>Meta 1 · Nov</b><br>15 000 €<br><em class="miss" data-goal="15000"></em></span><span style="left:72.222%;transform:translateX(-100%);text-align:right"><b>Meta 2 · Dez</b><br>26 000 €<br><em class="miss" data-goal="26000"></em></span><span style="left:100%;transform:translateX(-100%);text-align:right"><b>Meta 3 · Jan</b><br>36 000 €<br><em class="miss" data-goal="36000"></em></span></div>
         </div>
       </div>
       <div class="plan">
@@ -368,6 +387,12 @@ footer .wrap{border-top:1px solid #444;padding-top:18px}
       <div class="two">
         <div class="card bl chart"><svg id="chart" viewBox="0 0 640 300" role="img" aria-label="Gráfico dos m² acumulados"></svg></div>
       </div>
+    </section>
+
+    <section class="block" aria-labelledby="h-tipo">
+      <span class="tag b">Origem das ofertas</span>
+      <h2 id="h-tipo">Como chegaram as ofertas</h2>
+      <div class="card types" id="types"></div>
     </section>
 
     <div class="updated"><span id="upd">—</span><span>Só contam valores pagos · Nomes não divulgados</span></div>
@@ -651,6 +676,7 @@ footer .wrap{border-top:1px solid #444;padding-top:18px}
   'Mais informações sobre como contribuir →':['More information on how to give →','Más información sobre cómo contribuir →'],
   'Modo TV (16:9):':['TV mode (16:9):','Modo TV (16:9):'],'Escuro':['Dark','Oscuro'],'Claro':['Light','Claro'],
   'Última atualização:':['Last update:','Última actualización:'],'· atualiza às 08:00, 14:00, 19:00 e 23:00':['· updates at 08:00, 14:00, 19:00 and 23:00 (Lisbon)','· se actualiza a las 08:00, 14:00, 19:00 y 23:00'],
+  'Atingida':['Reached','Alcanzada'],'Faltam':['Still needed:','Faltan'],'Origem das ofertas':['Where gifts come from','Origen de las ofrendas'],'Como chegaram as ofertas':['How the gifts arrived','Cómo llegaron las ofrendas'],'Distribuição por origem':['Breakdown by source','Distribución por origen'],'Ofertas':['Offerings (online)','Ofrendas (online)'],'Transferência':['Bank transfer','Transferencia'],'Numerário':['Cash','Efectivo'],'Outro':['Other','Otro'],'oferta':['gift','ofrenda'],'ofertas':['gifts','ofrendas'],
   'Copiado ✓':['Copied ✓','Copiado ✓'],
   '% DO OBJETIVO':['% OF GOAL','% DEL OBJETIVO'],
   'OBJETIVO ATINGIDO':['GOAL REACHED','OBJETIVO ALCANZADO'],
@@ -716,8 +742,17 @@ footer .wrap{border-top:1px solid #444;padding-top:18px}
   for(var i=0;i<N;i++){var s=document.createElement('div');var v0=i*M2;s.className='sq '+(v0<15000?'m1':v0<26000?'m2':'m3');s.dataset.meta=(v0<15000?'Meta 1':v0<26000?'Meta 2':'Meta 3');var f=document.createElement('i');var n=document.createElement('b');n.textContent=String(i+1).padStart(3,'0');s.appendChild(f);s.appendChild(n);grid.appendChild(s);cells.push(f);boxes.push(s)}
 
   function render(d){
-    var rows=(d.rows||[]).filter(function(r){return r.paid!==false}).map(function(r){return{date:pd(r.date),amount:+r.amount||0}}).sort(function(a,b){return a.date-b.date});
+    var rows=(d.rows||[]).filter(function(r){return r.paid!==false}).map(function(r){return{date:pd(r.date),amount:+r.amount||0,type:r.type||(/ 12:00:00$/.test(r.date)?'Outro':'Ofertas')}}).sort(function(a,b){return a.date-b.date});
     var paid=rows.reduce(function(a,r){return a+r.amount},0);
+    [].forEach.call(document.querySelectorAll('.ticks .miss'),function(m){var g=+m.dataset.goal;if(paid>=g){m.textContent='✓ '+t('Atingida');m.className='miss ok'}else{m.textContent=t('Faltam')+' '+eur(g-paid);m.className='miss'}});
+    (function(){var TY=['Ofertas','Transferência','MB WAY','Numerário','Outro'],C={},N={};
+      rows.forEach(function(r){var k=TY.indexOf(r.type)<0?'Outro':r.type;C[k]=(C[k]||0)+r.amount;N[k]=(N[k]||0)+1});
+      var list=TY.filter(function(k){return C[k]>0||k==='Ofertas'}),mx=Math.max.apply(null,list.map(function(k){return C[k]||0}).concat([1])),tot=paid||1;
+      var st='<div class="stack" role="img" aria-label="'+t('Distribuição por origem')+'">'+list.map(function(k){return '<i style="background:var(--ty'+(TY.indexOf(k)+1)+')" data-w="'+((C[k]||0)/tot*100)+'"></i>'}).join('')+'</div>';
+      var rs='<div class="rows">'+list.map(function(k){var v=C[k]||0;return '<div class="trow"><span class="tl"><span class="sw" style="background:var(--ty'+(TY.indexOf(k)+1)+')"></span>'+t(k)+'</span><span class="tb"><span style="background:var(--ty'+(TY.indexOf(k)+1)+')" data-w="'+(v/mx*100)+'"></span></span><span class="tv">'+eur(v)+'</span><span class="tp">'+num(v/tot*100,1)+'%</span><span class="tn">'+(N[k]||0)+' '+t((N[k]||0)===1?'oferta':'ofertas')+'</span></div>'}).join('')+'</div>';
+      var box=document.getElementById('types');box.innerHTML=st+rs;
+      requestAnimationFrame(function(){[].forEach.call(box.querySelectorAll('[data-w]'),function(x){x.style.width=x.dataset.w+'%'})});
+    })();
     var m2=paid/M2, full=Math.floor(m2), frac=m2-full, pct=Math.min(paid/GOAL,1);
     document.getElementById('amount').textContent=eur(paid);
     document.getElementById('pct').textContent=num(pct*100,1)+'%';
